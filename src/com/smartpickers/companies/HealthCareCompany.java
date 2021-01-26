@@ -4,6 +4,8 @@ import com.smartpickers.stockdata.GetAPI;
 
 public class HealthCareCompany extends AbstractCompany {
 	
+	
+	
 	private GetAPI getAPI;
 	
 	 public HealthCareCompany() {

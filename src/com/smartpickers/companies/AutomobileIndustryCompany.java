@@ -1,6 +1,14 @@
 package com.smartpickers.companies;
 
+import com.smartpickers.stockdata.GetAPI;
+
 public class AutomobileIndustryCompany extends AbstractCompany {
+	
+	private GetAPI getApi;
+	
+	public AutomobileIndustryCompany(GetAPI getApi) {
+		this.getApi = getApi;
+	}
 
 	@Override
 	public double getPERatio() {

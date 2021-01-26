@@ -4,7 +4,10 @@ import java.util.AbstractCollection;
 import java.util.Scanner;
 
 import com.smartpickers.companies.AbstractCompany;
+import com.smartpickers.companies.FinanceCompany;
+import com.smartpickers.companies.InsuranceCompany;
 import com.smartpickers.companies.TechnologyCompany;
+import com.smartpickers.stockdata.GetAPI;
 
 public class Main {
 
@@ -14,6 +17,10 @@ public class Main {
 		// Create the company stock declaration 
 		
 		AbstractCompany companyStock;
+		
+		// Get API Object
+		 GetAPI api = new GetAPI();
+		 
 		
 		// Get the Set of Questions
 		
@@ -57,25 +64,29 @@ public class Main {
 		}
  	}
 	
-	public void stockProcessor(String whatIndustry, AbstractCompany companyStock)
+	public void stockProcessor(String whatIndustry, AbstractCompany companyStock, GetAPI api)
 	{
 		if(whatIndustry.contentEquals("Technology"))
 		{
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
-			companyStock = new TechnologyCompany();
+			companyStock = new TechnologyCompany(api);
 			companyStock.getstockDetails();
 		}
 		else if(whatIndustry.contentEquals("Finance")) {
-			
+			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
+			companyStock = new FinanceCompany(api);
+			companyStock.getstockDetails();
 		
 		}
 		else if(whatIndustry.contentEquals("Insurance")) {
-			
+			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
+			companyStock = new InsuranceCompany(api);
+			companyStock.getstockDetails();
 			
 		}
-		else if(whatIndustry.contentEquals("")) {
+		else if(whatIndustry.contentEquals("Automobile")) {
 			
-			
+			// Create Automobile Object - Objects are created dynamically using runtime Polymorphism
 		}
 				
 	}
