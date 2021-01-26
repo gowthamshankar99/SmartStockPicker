@@ -34,19 +34,19 @@ public class Main {
 		
 		System.out.println("1. Get Stock Quote");
 		
-		
-		
 		System.out.println("2. Get the list of all Major Tech Industry Stocks");
 		
 		System.out.println("3. Compare two stocks and find a better Buy ?");
 		
 		int getOption = scanner.nextInt();
-		
+		System.out.println();
 		if(getOption == 1 || getOption == 2 || getOption == 3)
 		{
 			System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Automobile\n4. Insurance");
+			System.out.println();
 			int getStockOption = scanner.nextInt();
 			System.out.println("Enter the ticker Name! For Example - AAPL");
+			System.out.println();
 			String tickerName = scanner.next();
 			stockProcessor(getStockOption, companyStock, api,tickerName);
 		}
