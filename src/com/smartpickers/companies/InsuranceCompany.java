@@ -68,7 +68,7 @@ public class InsuranceCompany extends AbstractCompany {
 	}
 
 	@Override
-	public void getstockDetails(String tickerName) throws IOException {
+	public String getstockDetails(String tickerName) throws IOException {
 		// get stock data from the API
 		System.out.println("Getting stock data for Insurance Stocks!");
 		if(!this.insuranceCompanies.contains(tickerName))
@@ -77,7 +77,9 @@ public class InsuranceCompany extends AbstractCompany {
 		{
 			String getData = getApi.getApiData(tickerName);
 			System.out.println(getData);
+			return getData;
 		}
+		return null;
 	}
 	
 

@@ -25,7 +25,7 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
-	public abstract void getstockDetails(String tickerName) throws IOException;
+	public abstract String getstockDetails(String tickerName) throws IOException;
 	
 	public abstract double getPERatio();
 	

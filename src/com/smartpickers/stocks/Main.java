@@ -1,8 +1,12 @@
 package com.smartpickers.stocks;
 
 import java.io.IOException;
-import java.util.AbstractCollection;
 import java.util.Scanner;
+
+import org.json.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.smartpickers.companies.AbstractCompany;
 import com.smartpickers.companies.AutomobileIndustryCompany;
@@ -13,7 +17,7 @@ import com.smartpickers.stockdata.GetAPI;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		
 		
 		// Create the company stock declaration 
@@ -76,33 +80,42 @@ public class Main {
 		}
  	}
 	
-	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName) throws IOException
+	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName) throws IOException, ParseException
 	{
+		String result = "";
 		if(whatIndustry == 1) //  .contentEquals("Technology")
 		{
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new TechnologyCompany(api);
-			companyStock.getstockDetails(tickerName);
+			result = companyStock.getstockDetails(tickerName);
 		}
 		else if(whatIndustry == 2) { // .contentEquals("Finance")
 			System.out.println("should be here" + tickerName);
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new FinanceCompany(api);
-			companyStock.getstockDetails(tickerName);
+			result = companyStock.getstockDetails(tickerName);
 		
 		}
 		else if(whatIndustry == 3) { // .contentEquals("Insurance")
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new InsuranceCompany(api);
-			companyStock.getstockDetails(tickerName);
+			result = companyStock.getstockDetails(tickerName);
 			
 		}
 		else if(whatIndustry == 4) { // .contentEquals("Automobile")
 			
 			// Create Automobile Object - Objects are created dynamically using runtime Polymorphism
 			companyStock  = new AutomobileIndustryCompany(api);
-			companyStock.getstockDetails(tickerName);
+			result = companyStock.getstockDetails(tickerName);
 		}
+		
+		
+		JSONParser parser = new JSONParser();
+		JSONObject obj = (JSONObject)parser.parse(result);
+		JSONObject obj2 = (JSONObject)obj.get("Global Quote");
+		
+        
+        System.out.println(obj2.get("05. price"));
 				
 	}
 

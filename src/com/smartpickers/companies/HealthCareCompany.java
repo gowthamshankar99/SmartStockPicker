@@ -65,16 +65,18 @@ public class HealthCareCompany extends AbstractCompany {
 	}
 
 	@Override
-	public void getstockDetails(String tickerName) throws IOException {
+	public String getstockDetails(String tickerName) throws IOException {
 		// get stock data from the API
-		System.out.println("Getting stock data for Insurance Stocks!");
+		System.out.println("Getting stock data for HealthCare Stocks!");
 		if(!this.healthcareCompanies.contains(tickerName))
-			System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Insurance Company!");
+			System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Healthcare Company!");
 		else
 		{
 			String getData = getAPI.getApiData(tickerName);
 			System.out.println(getData);
+			return getData;
 		}
+		return null;
 	}
 
 }
