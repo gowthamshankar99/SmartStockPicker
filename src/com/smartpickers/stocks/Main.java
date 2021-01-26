@@ -59,13 +59,24 @@ public class Main {
 	
 	public void stockProcessor(String whatIndustry, AbstractCompany companyStock)
 	{
-		if(whatIndustry.contentEquals("Techology"))
+		if(whatIndustry.contentEquals("Technology"))
 		{
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new TechnologyCompany();
 			companyStock.getstockDetails();
 		}
+		else if(whatIndustry.contentEquals("Finance")) {
+			
 		
+		}
+		else if(whatIndustry.contentEquals("Insurance")) {
+			
+			
+		}
+		else if(whatIndustry.contentEquals("")) {
+			
+			
+		}
 				
 	}
 

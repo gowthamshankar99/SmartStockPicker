@@ -36,5 +36,11 @@ public class TechnologyCompany extends AbstractCompany {
 	{
 		System.out.println("Getting stock details from Technology Company");
 	}
+
+	@Override
+	public void getstockDetails() {
+		// get stock data from the API
+		
+	}
 	
 }

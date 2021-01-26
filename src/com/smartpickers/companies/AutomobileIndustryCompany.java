@@ -36,4 +36,10 @@ public class AutomobileIndustryCompany extends AbstractCompany {
 		return 0;
 	}
 
+	@Override
+	public void getstockDetails() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

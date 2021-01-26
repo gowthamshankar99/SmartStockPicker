@@ -23,9 +23,7 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
-	public void getstockDetails() {
-		
-	}
+	public abstract void getstockDetails();
 	
 	public abstract double getPERatio();
 	

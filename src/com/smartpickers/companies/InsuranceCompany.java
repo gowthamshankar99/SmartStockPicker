@@ -36,6 +36,12 @@ public class InsuranceCompany extends AbstractCompany {
 	public double getCurrentStandardPremiumAmount() {
 		return 0;
 	}
+
+	@Override
+	public void getstockDetails() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
