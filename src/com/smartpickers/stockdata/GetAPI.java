@@ -11,8 +11,7 @@ public class GetAPI {
 	
 	public String getApiData(String amountofQuestions, String catagory, String difficulty, String type) throws IOException
 	{
-		URL urlForGetRequest = new URL("https://opentdb.com/api.php?amount=" + amountofQuestions + "&category=" + catagory + "&difficulty=" + difficulty + "&type=" + type);
-		System.out.println("https://opentdb.com/api.php?amount=" + amountofQuestions + "&category=" + catagory + "&difficulty=" + difficulty + "&type=" + type);
+		URL urlForGetRequest = new URL("stockapicomeshere");
 	    String readLine = null;
 	    HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
 	    connection.setRequestMethod("GET");
