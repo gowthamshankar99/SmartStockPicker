@@ -15,6 +15,7 @@ public class TechnologyCompany extends AbstractCompany {
 	 static final String GOOGLE = "GOOG";
 	 static final String IBM = "IBM";
 	 static final String PELATON = "PTON";
+	 static final String CISCO = "CSCO";
 	
 
 	// Creating ArrayList to hold Stock Tickers
@@ -65,9 +66,6 @@ public class TechnologyCompany extends AbstractCompany {
 		return 0;
 	}
 
-	public void getStockDetails() {
-		System.out.println("Getting stock details from Technology Company");
-	}
 
 	@Override
 	public void getstockDetails(String tickerName) throws IOException {

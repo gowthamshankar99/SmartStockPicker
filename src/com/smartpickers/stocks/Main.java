@@ -42,7 +42,7 @@ public class Main {
 		System.out.println();
 		if(getOption == 1 || getOption == 2 || getOption == 3)
 		{
-			System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Automobile\n4. Insurance");
+			System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Insurance\n4. Automobile");
 			System.out.println();
 			int getStockOption = scanner.nextInt();
 			System.out.println("Enter the ticker Name! For Example - AAPL");
@@ -85,6 +85,7 @@ public class Main {
 			companyStock.getstockDetails(tickerName);
 		}
 		else if(whatIndustry == 2) { // .contentEquals("Finance")
+			System.out.println("should be here" + tickerName);
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new FinanceCompany(api);
 			companyStock.getstockDetails(tickerName);
