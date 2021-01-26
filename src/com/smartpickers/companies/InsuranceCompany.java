@@ -1,0 +1,41 @@
+package com.smartpickers.companies;
+
+public class InsuranceCompany extends AbstractCompany {
+
+	@Override
+	public double getPERatio() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getEPS() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getDEquityRatio() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getLongTermAssets() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getShortTermAssets() {
+		// TODO Auto-generated method stub
+	
+		return 0;
+	}
+	
+	public double getCurrentStandardPremiumAmount() {
+		return 0;
+	}
+	
+
+}
