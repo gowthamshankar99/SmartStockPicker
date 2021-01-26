@@ -11,8 +11,8 @@ public class GetAPI {
 	
 	public String getApiData(String tickerName) throws IOException
 	{
-		System.out.println("Getting stock price for the ticker " + tickerName);
-		URL urlForGetRequest = new URL("stockapicomeshere");
+		System.out.println("Getting stock price for the ticker " + tickerName + "&apikey=" + "PTQSQULZN28J4N6E");
+		URL urlForGetRequest = new URL("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="+tickerName + "&apikey=" + "PTQSQULZN28J4N6E");
 	    String readLine = null;
 	    HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
 	    connection.setRequestMethod("GET");

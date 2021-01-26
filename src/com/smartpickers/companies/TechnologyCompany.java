@@ -77,7 +77,8 @@ public class TechnologyCompany extends AbstractCompany {
 			System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Technology Company!");
 		else
 		{
-			getApi.getApiData(tickerName);
+			String getData = getApi.getApiData(tickerName);
+			System.out.println(getData);
 		}
 	}
 
