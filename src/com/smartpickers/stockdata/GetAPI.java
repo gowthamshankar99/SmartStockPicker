@@ -9,8 +9,9 @@ import java.net.URL;
 public class GetAPI {
 
 	
-	public String getApiData(String amountofQuestions, String catagory, String difficulty, String type) throws IOException
+	public String getApiData(String tickerName) throws IOException
 	{
+		System.out.println("Getting stock price for the ticker " + tickerName);
 		URL urlForGetRequest = new URL("stockapicomeshere");
 	    String readLine = null;
 	    HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();

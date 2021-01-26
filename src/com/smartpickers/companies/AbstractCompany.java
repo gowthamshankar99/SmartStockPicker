@@ -1,5 +1,7 @@
 package com.smartpickers.companies;
 
+import java.io.IOException;
+
 public abstract class AbstractCompany {
 	
 	
@@ -23,7 +25,7 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
-	public abstract void getstockDetails();
+	public abstract void getstockDetails(String tickerName) throws IOException;
 	
 	public abstract double getPERatio();
 	

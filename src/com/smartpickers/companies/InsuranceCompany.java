@@ -46,7 +46,7 @@ public class InsuranceCompany extends AbstractCompany {
 	}
 
 	@Override
-	public void getstockDetails() {
+	public void getstockDetails(String tickerName) {
 		// TODO Auto-generated method stub
 		
 	}

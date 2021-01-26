@@ -1,9 +1,11 @@
 package com.smartpickers.stocks;
 
+import java.io.IOException;
 import java.util.AbstractCollection;
 import java.util.Scanner;
 
 import com.smartpickers.companies.AbstractCompany;
+import com.smartpickers.companies.AutomobileIndustryCompany;
 import com.smartpickers.companies.FinanceCompany;
 import com.smartpickers.companies.InsuranceCompany;
 import com.smartpickers.companies.TechnologyCompany;
@@ -11,12 +13,12 @@ import com.smartpickers.stockdata.GetAPI;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		
 		// Create the company stock declaration 
 		
-		AbstractCompany companyStock;
+		AbstractCompany companyStock = null;
 		
 		// Get API Object
 		 GetAPI api = new GetAPI();
@@ -32,12 +34,22 @@ public class Main {
 		
 		System.out.println("1. Get Stock Quote");
 		
+		
+		
 		System.out.println("2. Get the list of all Major Tech Industry Stocks");
 		
 		System.out.println("3. Compare two stocks and find a better Buy ?");
 		
 		int getOption = scanner.nextInt();
 		
+		if(getOption == 1 || getOption == 2 || getOption == 3)
+		{
+			System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Automobile\n4. Insurance");
+			int getStockOption = scanner.nextInt();
+			System.out.println("Enter the ticker Name! For Example - AAPL");
+			String tickerName = scanner.next();
+			stockProcessor(getStockOption, companyStock, api,tickerName);
+		}
 		
 		
 		switch(getOption) {
@@ -64,29 +76,31 @@ public class Main {
 		}
  	}
 	
-	public void stockProcessor(String whatIndustry, AbstractCompany companyStock, GetAPI api)
+	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName) throws IOException
 	{
-		if(whatIndustry.contentEquals("Technology"))
+		if(whatIndustry == 1) //  .contentEquals("Technology")
 		{
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new TechnologyCompany(api);
-			companyStock.getstockDetails();
+			companyStock.getstockDetails(tickerName);
 		}
-		else if(whatIndustry.contentEquals("Finance")) {
+		else if(whatIndustry == 2) { // .contentEquals("Finance")
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new FinanceCompany(api);
-			companyStock.getstockDetails();
+			companyStock.getstockDetails(tickerName);
 		
 		}
-		else if(whatIndustry.contentEquals("Insurance")) {
+		else if(whatIndustry == 3) { // .contentEquals("Insurance")
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new InsuranceCompany(api);
-			companyStock.getstockDetails();
+			companyStock.getstockDetails(tickerName);
 			
 		}
-		else if(whatIndustry.contentEquals("Automobile")) {
+		else if(whatIndustry == 4) { // .contentEquals("Automobile")
 			
 			// Create Automobile Object - Objects are created dynamically using runtime Polymorphism
+			companyStock  = new AutomobileIndustryCompany(api);
+			companyStock.getstockDetails(tickerName);
 		}
 				
 	}
