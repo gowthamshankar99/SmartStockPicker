@@ -23,6 +23,10 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
+	public void getstockDetails() {
+		
+	}
+	
 	public abstract double getPERatio();
 	
 	public abstract double getEPS();
@@ -32,6 +36,7 @@ public abstract class AbstractCompany {
 	public abstract double getLongTermAssets();
 	
 	public abstract double getShortTermAssets();
+	
 	
 
 }

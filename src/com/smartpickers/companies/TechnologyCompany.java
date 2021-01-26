@@ -31,5 +31,10 @@ public class TechnologyCompany extends AbstractCompany {
 		// yet to be implemented
 		return 0;
 	}
-
+	
+	public void getStockDetails()
+	{
+		System.out.println("Getting stock details from Technology Company");
+	}
+	
 }
