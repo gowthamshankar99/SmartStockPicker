@@ -7,6 +7,8 @@
 
 ## Sample Output 
 
+(docs/Output.png)
+
 ## External API Used 
 
 
