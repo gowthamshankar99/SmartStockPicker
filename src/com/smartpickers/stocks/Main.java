@@ -31,7 +31,8 @@ public class Main {
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		System.out.println("Welcome to Smart Stock Picker");
+		while(true) {
+		System.err.println("\nWelcome to Smart Stock Picker");
 		System.out.println("Pick the Offerring from the options below!(Type 1, 2 or 3)");
 		System.out.println("1. Get Stock Quote");
 		System.out.println("2. Get the list of all Major Tech Industry Stocks");
@@ -56,16 +57,16 @@ public class Main {
 				 break;
 			case 3:
 				// call get the list of all major tech industry stocks names
+				System.out.println();
 				break;
 			default:
 				System.out.println("Wrong option selected!");
-				
-		
-		// Close the Scanner Object 
-				
-		scanner.close();
+				break;
 				
 		}
+				
+		}
+
  	}
 	
 	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName) throws IOException, ParseException
