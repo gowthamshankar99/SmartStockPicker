@@ -25,7 +25,7 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
-	// Abstract method - implementation in the subclasses
+	// Abstract method - implementation in the subclass
 	public abstract String getstockDetails(String tickerName) throws IOException;
 	
 	/**

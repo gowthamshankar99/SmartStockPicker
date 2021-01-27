@@ -52,11 +52,11 @@ public class Main {
 				break;
 				
 			case 2:
-				 // call smart stock picker API
+				 // call smart stock picker API - yet to be implemented
 				 System.out.println("Call smart stock picker API");
 				 break;
 			case 3:
-				// call get the list of all major tech industry stocks names
+				// call get the list of all major tech industry stocks names - yet to be implemented
 				System.out.println();
 				break;
 			default:
