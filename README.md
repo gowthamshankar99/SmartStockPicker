@@ -16,8 +16,12 @@ There is a total of 3 functionalities to the SmartStockPicker Application.
 
 ## Sample Output 
 
+Below is the sample output for the Smart Stock Picker Application. The Application responds to the User based on the Previous Inputs User has provided.
+
 ![Output](docs/Output.png)
 
 ## External API Used 
 
+In order to  grab stockmarket Data, alphavantage API has been consumed.  A key can be generated in the alphavantage website.
 
+For more Documentation on the API - Please visit [Alpha Advantage Website](https://www.alphavantage.co/)
