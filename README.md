@@ -7,7 +7,7 @@
 
 ## Sample Output 
 
-(docs/Output.png)
+![Output](docs/Output.png)
 
 ## External API Used 
 
