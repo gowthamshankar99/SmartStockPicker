@@ -69,5 +69,10 @@ public class TechnologyCompany extends AbstractCompany implements IStockIndex {
 	public String indexType() {
 		return null;
 	}
+	
+	public int getActiveSubscribersCount() {
+		// api call is yet to be implemented
+		return 0;
+	}
 
 }

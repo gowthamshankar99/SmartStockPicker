@@ -77,6 +77,11 @@ public class Main {
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
 			companyStock = new TechnologyCompany(api);
 			result = companyStock.getstockDetails(tickerName);
+			// get active Users count
+			
+			// Downcasting the object to Tech object to access TechnologyCompany Class related Methods
+			 TechnologyCompany techCompnyForActiveUsersCount = (TechnologyCompany)companyStock;
+			 techCompnyForActiveUsersCount.getActiveSubscribersCount();
 		}
 		else if(whatIndustry == 2) { // .contentEquals("Finance")
 			System.out.println("should be here" + tickerName);
