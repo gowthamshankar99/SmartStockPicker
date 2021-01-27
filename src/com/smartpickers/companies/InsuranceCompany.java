@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.smartpickers.stockdata.GetAPI;
 
-public class InsuranceCompany extends AbstractCompany {
+public class InsuranceCompany extends AbstractCompany implements IStockIndex {
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks
 	
@@ -31,37 +31,6 @@ public class InsuranceCompany extends AbstractCompany {
 		insuranceCompanies.add(MASSMUTUAL);
 		insuranceCompanies.add(ALLSTATE);
 	}
-
-	@Override
-	public double getPERatio() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getEPS() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getDEquityRatio() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getLongTermAssets() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getShortTermAssets() {
-		// TODO Auto-generated method stub
-	
-		return 0;
-	}
 	
 	public double getCurrentStandardPremiumAmount() {
 		return 0;
@@ -76,9 +45,23 @@ public class InsuranceCompany extends AbstractCompany {
 		else
 		{
 			String getData = getApi.getApiData(tickerName);
-			System.out.println(getData);
 			return getData;
 		}
+		return null;
+	}
+
+	@Override
+	public String indexName() {
+		return null;
+	}
+
+	@Override
+	public String indexDetails() {
+		return null;
+	}
+
+	@Override
+	public String indexType() {
 		return null;
 	}
 	

@@ -3,7 +3,6 @@ package com.smartpickers.stocks;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -33,33 +32,22 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("Welcome to Smart Stock Picker");
-		
 		System.out.println("Pick the Offerring from the options below!(Type 1, 2 or 3)");
-		
 		System.out.println("1. Get Stock Quote");
-		
 		System.out.println("2. Get the list of all Major Tech Industry Stocks");
-		
 		System.out.println("3. Compare two stocks and find a better Buy ?");
 		
-		int getOption = scanner.nextInt();
-		System.out.println();
-		if(getOption == 1 || getOption == 2 || getOption == 3)
-		{
-			System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Insurance\n4. Automobile");
-			System.out.println();
-			int getStockOption = scanner.nextInt();
-			System.out.println("Enter the ticker Name! For Example - AAPL");
-			System.out.println();
-			String tickerName = scanner.next();
-			stockProcessor(getStockOption, companyStock, api,tickerName);
-		}
-		
+		int getOption = scanner.nextInt();		
 		
 		switch(getOption) {
 			case 1:
 				// call getstockquoteAPI
-				System.out.println("Call stock quote API");
+				
+				System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Insurance\n4. Automobile\n");
+				int getStockOption = scanner.nextInt();
+				System.out.println("Enter the ticker Name! For Example - AAPL\n");
+				String tickerName = scanner.next();
+				stockProcessor(getStockOption, companyStock, api,tickerName);
 				break;
 				
 			case 2:
@@ -109,13 +97,23 @@ public class Main {
 			result = companyStock.getstockDetails(tickerName);
 		}
 		
+		if(result == null)
+		{
+			System.out.println("Something went wrong while performing the API call!");
+			System.exit(99);
+		}
+		
 		
 		JSONParser parser = new JSONParser();
 		JSONObject obj = (JSONObject)parser.parse(result);
 		JSONObject obj2 = (JSONObject)obj.get("Global Quote");
 		
         
-        System.out.println(obj2.get("05. price"));
+        System.out.println("Current Price " + obj2.get("05. price"));
+        System.out.println("Previous High " + obj2.get("03. high"));
+        System.out.println("Previous Low " + obj2.get("04. low"));
+        System.out.println("Current Volume " + obj2.get("06. volume"));
+        
 				
 	}
 

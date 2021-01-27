@@ -9,9 +9,9 @@ import java.net.URL;
 public class GetAPI {
 
 	
-	public static String getApiData(String tickerName) throws IOException
+	public String getApiData(String tickerName) throws IOException
 	{
-		System.out.println("Getting stock price for the ticker " + tickerName);
+		System.out.println("Getting stock price for the ticker " + tickerName + "\n");
 		URL urlForGetRequest = new URL("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="+tickerName + "&apikey=" + "PTQSQULZN28J4N6E");
 	    String readLine = null;
 	    HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();

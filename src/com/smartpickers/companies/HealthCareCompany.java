@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.smartpickers.stockdata.GetAPI;
 
-public class HealthCareCompany extends AbstractCompany {
+public class HealthCareCompany extends AbstractCompany implements IStockIndex  {
 	
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks
@@ -34,35 +34,6 @@ public class HealthCareCompany extends AbstractCompany {
 		 
 	 }
 
-	@Override
-	public double getPERatio() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getEPS() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getDEquityRatio() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getLongTermAssets() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getShortTermAssets() {
-		// yet to be implemented
-		return 0;
-	}
 
 	@Override
 	public String getstockDetails(String tickerName) throws IOException {
@@ -76,6 +47,24 @@ public class HealthCareCompany extends AbstractCompany {
 			System.out.println(getData);
 			return getData;
 		}
+		return null;
+	}
+
+
+	@Override
+	public String indexName() {
+		return null;
+	}
+
+
+	@Override
+	public String indexDetails() {
+		return null;
+	}
+
+
+	@Override
+	public String indexType() {
 		return null;
 	}
 

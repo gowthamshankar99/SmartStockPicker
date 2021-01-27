@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.smartpickers.stockdata.GetAPI;
 
-public class TechnologyCompany extends AbstractCompany {
+public class TechnologyCompany extends AbstractCompany implements IStockIndex {
 
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks
@@ -36,36 +36,6 @@ public class TechnologyCompany extends AbstractCompany {
 		
 	}
 
-	@Override
-	public double getPERatio() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getEPS() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getDEquityRatio() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getLongTermAssets() {
-		// yet to be implemented
-		return 0;
-	}
-
-	@Override
-	public double getShortTermAssets() {
-		// yet to be implemented
-		return 0;
-	}
-
 
 	@Override
 	public String getstockDetails(String tickerName) throws IOException {
@@ -75,13 +45,29 @@ public class TechnologyCompany extends AbstractCompany {
 			System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Technology Company!");
 		else
 		{
-			String getData = getApi.getApiData(tickerName);
-			System.out.println(getData);
-			
+			String getData = getApi.getApiData(tickerName);			
 			return getData;
 		}
 		
 		return "";
+	}
+
+
+	@Override
+	public String indexName() {
+		return null;
+	}
+
+
+	@Override
+	public String indexDetails() {
+		return null;
+	}
+
+
+	@Override
+	public String indexType() {
+		return null;
 	}
 
 }

@@ -25,17 +25,49 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
+	// Abstract method - implementation in the subclasses
 	public abstract String getstockDetails(String tickerName) throws IOException;
 	
-	public abstract double getPERatio();
+	/**
+	 * This Method doesnt need to be a abstract method - all stocks regadless of what industry they belong to - have the same P/E ratio calculation
+	 * @returns a  double value
+	 */
+	public double getPERatio() {
+		//  yet to be implemented
+		return 0;
+	}
 	
-	public abstract double getEPS();
+	/**
+	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
+	 * @returns a  double value
+	 */
 	
-	public abstract double getDEquityRatio();
+	public double getEPS() {
+		return 0;
+	}
+	/**
+	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
+	 * @returns a  double value
+	 */
+	public double getDEquityRatio() {
+		return 0;
+	}
 	
-	public abstract double getLongTermAssets();
+	/**
+	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
+	 * @returns a  double value
+	 */
+	public double getLongTermAssets() {
+		return 0;
+	}
 	
-	public abstract double getShortTermAssets();
+	/**
+	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
+	 * @returns a  double value
+	 */
+	public double getShortTermAssets() {
+		return 0;
+	}
 	
 	
 
