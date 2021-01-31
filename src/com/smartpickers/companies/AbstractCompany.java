@@ -1,6 +1,9 @@
 package com.smartpickers.companies;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 public abstract class AbstractCompany {
 	
@@ -24,6 +27,8 @@ public abstract class AbstractCompany {
 	public void setHeadQuartersLocation(String headQuartersLocation) {
 		this.headQuartersLocation = headQuartersLocation;
 	}
+	
+	
 	
 	// Abstract method - implementation in the subclass
 	public abstract String getstockDetails(String tickerName) throws IOException;
@@ -67,6 +72,18 @@ public abstract class AbstractCompany {
 	 */
 	public double getShortTermAssets() {
 		return 0;
+	}
+	
+	public Boolean readFile(AbstractCompany abstractCompany, File file) throws FileNotFoundException {
+		Scanner scanner = new Scanner(file);
+		
+		while(scanner.next() != null)
+		{
+			System.out.println(scanner.next());
+		}
+		
+		scanner.close();
+		return false;
 	}
 	
 	
