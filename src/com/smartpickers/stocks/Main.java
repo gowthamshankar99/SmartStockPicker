@@ -17,14 +17,17 @@ import com.smartpickers.companies.FinanceCompany;
 import com.smartpickers.companies.InsuranceCompany;
 import com.smartpickers.companies.TechnologyCompany;
 import com.smartpickers.stockdata.GetAPI;
+import com.smartpickers.userdefinedexception.InvalidTickerException;
 
 public class Main {
+
 	/*
 	 * Intent: main method  - the program starts executing from here.
 	 * The application intends to ask a series of Questions to the User related to investment 
 	 * to help the User make better investment decisions
 	 */
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException {
+
 		
 		// what is today's date 
 		
@@ -72,7 +75,17 @@ public class Main {
 				String datafromLogFile = readLogFile(logFile, tickerName, dtf.format(now));
 				if (datafromLogFile.contentEquals("data not present"))
 					// The call for the day has never been made - grab the data from the api
-					stockProcessor(getStockOption, companyStock, api,tickerName, logFile,dtf.format(now));
+				{
+					try {
+						stockProcessor(getStockOption, companyStock, api,tickerName, logFile,dtf.format(now));	
+					}
+					catch(InvalidTickerException ex)
+					{
+						System.err.println(ex.getMessage());
+					}
+					
+				}
+					
 				else
 					System.out.println("Reading data from the File");
 					System.out.println(datafromLogFile);
@@ -98,7 +111,7 @@ public class Main {
 	/*
 	 * Intent : Passes the User input to the API and gets the Stock Quote back.
 	 */
-	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName, File logFile,String todaysDate) throws IOException, ParseException
+	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName, File logFile,String todaysDate) throws IOException, ParseException, InvalidTickerException
 	{
 		/*
 		 * PRE_CONDITION: tickerName should be a valid ticker Name.

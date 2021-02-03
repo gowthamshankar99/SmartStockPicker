@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.smartpickers.userdefinedexception.InvalidTickerException;
+
 public abstract class AbstractCompany {
 	
 	
@@ -30,10 +32,8 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
-	
-	
 	// Abstract method - implementation in the subclass
-	public abstract String getstockDetails(String tickerName) throws IOException;
+	public abstract String getstockDetails(String tickerName) throws IOException, InvalidTickerException;
 	
 	/**
 	 * This Method doesnt need to be a abstract method - all stocks regadless of what industry they belong to - have the same P/E ratio calculation
@@ -77,7 +77,19 @@ public abstract class AbstractCompany {
 	}
 	
 	
-	// Read the respective industry File to see if the Ticker Exist before doing API call
+	
+	/*
+	 * Intent:  Read the respective industry File to see if the Ticker Exist before doing API call
+	 */
+	
+	/*
+	 * PRE_CONDITION: The Industry file should be present and the application assumes 
+	 * that the file already exists with values in it.
+	 */
+	
+	/*
+	 * POST_CONDITION: Returns true if the Ticker is present in the industry File
+	 */
 	public Boolean readFile(AbstractCompany abstractCompany, File file, String tickerName) throws FileNotFoundException {
 		// Using Scanner to read the file - as the file type is always a text file
 		Scanner scanner = new Scanner(file);
@@ -96,6 +108,19 @@ public abstract class AbstractCompany {
 		return false;
 	}
 	
+	
+	/*
+	 * Intent:  Write Logs to the Log file if the call is being made for the first time
+	 */
+	
+	/*
+	 * PRE_CONDITION: The Log file should be present and the application assumes 
+	 * that the file already exists
+	 */
+	
+	/*
+	 * POST_CONDITION: Writes the Quote values to the log file using BufferedWriter
+	 */
 	public void writeDailyLogs(File file, String data) throws IOException {
 
 		BufferedWriter out = new BufferedWriter(new FileWriter(file));

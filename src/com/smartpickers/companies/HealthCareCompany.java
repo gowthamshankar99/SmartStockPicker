@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.smartpickers.stockdata.GetAPI;
+import com.smartpickers.userdefinedexception.InvalidTickerException;
 
 public class HealthCareCompany extends AbstractCompany implements IStockIndex  {
 	
@@ -38,7 +39,7 @@ public class HealthCareCompany extends AbstractCompany implements IStockIndex  {
 	 *  Intent: Get Stock Details from the API and send the data to Console
 	 */
 	@Override
-	public String getstockDetails(String tickerName) throws IOException {
+	public String getstockDetails(String tickerName) throws IOException, InvalidTickerException {
 		/*
 		 *  PRE_CONDITION: tickerName should not be null, tickerName should be one of the 
 		 *  values from the HealthCareFile for the quote to work 
@@ -52,14 +53,15 @@ public class HealthCareCompany extends AbstractCompany implements IStockIndex  {
 		File HealthcareFile = new File("Healthcare.txt");
 		// If the file doesnt contain the ticker - fail the process
 		if(!readFile(this, HealthcareFile, tickerName))
-			System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Healthcare Company!");
+			throw new InvalidTickerException("We cannot get a quote at this time! The problem is because the Company is not a Insurance Company!");
+			//System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Healthcare Company!");
 		else
 		{
 			String getData = getAPI.getApiData(tickerName);
 			System.out.println(getData);
 			return getData;
 		}
-		return null;
+		//return null;
 	}
 
 

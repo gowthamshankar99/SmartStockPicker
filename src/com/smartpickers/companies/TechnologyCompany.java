@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.smartpickers.stockdata.GetAPI;
+import com.smartpickers.userdefinedexception.InvalidTickerException;
 
 public class TechnologyCompany extends AbstractCompany implements IStockIndex {
 
@@ -42,7 +43,7 @@ public class TechnologyCompany extends AbstractCompany implements IStockIndex {
 	 * Intent : Get stock data from the Alpha Advantage API and print the returned data to the console
 	 */
 	@Override
-	public String getstockDetails(String tickerName) throws IOException {
+	public String getstockDetails(String tickerName) throws IOException, InvalidTickerException {
 		/*
 		 *  PRE_CONDITION: tickerName should not be null, tickerName should be one of the 
 		 *  values from the TechnologyFile for the quote to work 
@@ -58,14 +59,15 @@ public class TechnologyCompany extends AbstractCompany implements IStockIndex {
 		
 		// If the file doesnt contain the ticker - fail the process
 		if(!readFile(this, technologyFile, tickerName))
-			System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Technology Company!");
+			//System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Technology Company!");
+			throw new InvalidTickerException("We cannot get a quote at this time! The problem is because the Company is not a Insurance Company!");
 		else
 		{
 			String getData = getApi.getApiData(tickerName);			
 			return getData;
 		}
 		
-		return "";
+		//return "";
 	}
 
 
