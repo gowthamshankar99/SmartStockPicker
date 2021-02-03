@@ -59,18 +59,29 @@ public class AutomobileIndustryCompany extends AbstractCompany implements IStock
 		return null;
 	}
 
+	/*
+	 * Intent : Get the Intent Name 
+	 */
 	@Override
-	public String indexName() {		
+	public String indexName() {
 		return null;
 	}
 
+
+	/*
+	 * Intent : Get Index Details
+	 */
 	@Override
 	public String indexDetails() {
 		return null;
 	}
 
+	/*
+	 * Intent: Get the IndexType
+	 */
 	@Override
 	public String indexType() {
+		
 		return null;
 	}
 

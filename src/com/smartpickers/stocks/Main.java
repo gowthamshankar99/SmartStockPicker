@@ -19,7 +19,11 @@ import com.smartpickers.companies.TechnologyCompany;
 import com.smartpickers.stockdata.GetAPI;
 
 public class Main {
-
+	/*
+	 * Intent: main method  - the program starts executing from here.
+	 * The application intends to ask a series of Questions to the User related to investment 
+	 * to help the User make better investment decisions
+	 */
 	public static void main(String[] args) throws IOException, ParseException {
 		
 		// what is today's date 
@@ -164,7 +168,20 @@ public class Main {
         System.out.println("Current Volume " + obj2.get("06. volume"));				
 	}
 	
+	/*
+	 * Intent : Read the Log File and check if the Log contains the Ticker Details
+	 * if -> it contains, return the data from the log file
+	 * else -> return  "data not present"
+	 */
 	public static String readLogFile(File file,String tickerName, String todaysDate) throws FileNotFoundException {	
+		/*
+		 * PRE_CONDITION: The File file needs to exist in order for the application to read the file. 
+		 * The application assumes that, the file exist.
+		 */
+		
+		/*
+		 * POST_CONDITION: The method returns data from the log file or returns "no data present"
+		 */
 		Scanner scanner = new Scanner(file);
 		while(scanner.hasNext())
 		{

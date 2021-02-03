@@ -67,19 +67,31 @@ public class FinanceCompany extends AbstractCompany implements IStockIndex {
 		return null;
 	}
 
+	/*
+	 * Intent : Get the Intent Name 
+	 */
 	@Override
 	public String indexName() {
 		return null;
 	}
 
+
+	/*
+	 * Intent : Get Index Details
+	 */
 	@Override
 	public String indexDetails() {
 		return null;
 	}
 
+	/*
+	 * Intent: Get the IndexType
+	 */
 	@Override
 	public String indexType() {
+		
 		return null;
 	}
+
 
 }
