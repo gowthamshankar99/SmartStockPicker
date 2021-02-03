@@ -1,7 +1,9 @@
 package com.smartpickers.companies;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -93,6 +95,20 @@ public abstract class AbstractCompany {
 		// returns true if the Ticker exist in the file (or) Returns false if the ticker doesnt exist in the file
 		return false;
 	}
+	
+	public void writeDailyLogs(File file, String data) throws IOException {
+
+		BufferedWriter out = new BufferedWriter(new FileWriter(file));
+		
+		out.write(data+"\n");
+		out.newLine();
+		
+		out.close();
+		
+		
+	}
+	
+
 	
 	
 

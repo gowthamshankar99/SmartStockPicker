@@ -1,6 +1,10 @@
 package com.smartpickers.stocks;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import org.json.simple.JSONObject;
@@ -18,8 +22,15 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, ParseException {
 		
+		// what is today's date 
 		
-		// Create the company stock declaration 
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+
+	    LocalDateTime now = LocalDateTime.now();  
+		System.out.println(dtf.format(now));
+		
+		// Create File object for Log file
+		File logFile = new File("DailyTickerLog.txt");
 		
 		AbstractCompany companyStock = null;
 		
@@ -48,7 +59,19 @@ public class Main {
 				int getStockOption = scanner.nextInt();
 				System.out.println("Enter the ticker Name! For Example - AAPL\n");
 				String tickerName = scanner.next();
-				stockProcessor(getStockOption, companyStock, api,tickerName);
+				/*
+				 *  First, read the log file for the day , 
+				 *  check to see if the API call for the day 
+				 *  has already been made
+				 */
+					
+				String datafromLogFile = readLogFile(logFile, tickerName, dtf.format(now));
+				if (datafromLogFile.contentEquals("data not present"))
+					// The call for the day has never been made - grab the data from the api
+					stockProcessor(getStockOption, companyStock, api,tickerName, logFile,dtf.format(now));
+				else
+					System.out.println("Reading data from the File");
+					System.out.println(datafromLogFile);
 				break;
 				
 			case 2:
@@ -63,8 +86,7 @@ public class Main {
 				System.out.println("Wrong option selected!");
 				break;
 				
-		}
-				
+		}	
 		}
 
  	}
@@ -72,7 +94,7 @@ public class Main {
 	/*
 	 * Intent : Passes the User input to the API and gets the Stock Quote back.
 	 */
-	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName) throws IOException, ParseException
+	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName, File logFile,String todaysDate) throws IOException, ParseException
 	{
 		/*
 		 * PRE_CONDITION: tickerName should be a valid ticker Name.
@@ -84,6 +106,8 @@ public class Main {
 		 * POST_CONDITION : If all precondition posts are satisfied, the stock quote, high price,
 		 * low price, volume are returned back
 		 */
+
+		final String DELIMITER_LINE = "********************"; 
 		String result = "";
 		if(whatIndustry == 1) //  .contentEquals("Technology")
 		{
@@ -95,8 +119,6 @@ public class Main {
 			// Downcasting the object to Tech object to access TechnologyCompany Class related Methods
 			 TechnologyCompany techCompnyForActiveUsersCount = (TechnologyCompany)companyStock;
 			 techCompnyForActiveUsersCount.getActiveSubscribersCount();
-			 
-
 		}
 		else if(whatIndustry == 2) { // .contentEquals("Finance")
 			System.out.println("should be here" + tickerName);
@@ -124,21 +146,34 @@ public class Main {
 			System.exit(99);
 		}
 		
-		
-		
-		
+		/*
+		 * Parse the JSON object using JSONParser to grab the 
+		 * intended data only from the JSON Dump
+		 */
 		System.out.println("what is in the result string " +  result);
 		JSONParser parser = new JSONParser();
 		JSONObject obj = (JSONObject)parser.parse(result);
 		JSONObject obj2 = (JSONObject)obj.get("Global Quote");
 		
+        // Write data to the file to reduce API calls
+        companyStock.writeDailyLogs(logFile, todaysDate + "-" + tickerName + "\n" + "Current Price " + obj2.get("05. price") + "\n" + "Previous High " + obj2.get("03. high") + "\n" + "Previous Low " + obj2.get("04. low") + "\n" + "Current Volume " + obj2.get("06. volume") + "\n" + DELIMITER_LINE);
         
         System.out.println("Current Price " + obj2.get("05. price"));
         System.out.println("Previous High " + obj2.get("03. high"));
         System.out.println("Previous Low " + obj2.get("04. low"));
-        System.out.println("Current Volume " + obj2.get("06. volume"));
-        
-				
+        System.out.println("Current Volume " + obj2.get("06. volume"));				
+	}
+	
+	public static String readLogFile(File file,String tickerName, String todaysDate) throws FileNotFoundException {	
+		Scanner scanner = new Scanner(file);
+		while(scanner.hasNext())
+		{
+			if(scanner.next().trim().contentEquals(todaysDate + "-" + tickerName))
+				return scanner.nextLine() + "\n" + scanner.nextLine() + "\n" + scanner.nextLine() + "\n" + scanner.nextLine();
+		}
+		scanner.close();
+		
+		return "data not present";
 	}
 
 }
