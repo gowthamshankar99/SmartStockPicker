@@ -43,10 +43,10 @@ There are two possibilities of data retrieval for Output.
 
 1.	Retrieving data from the Log file – this scenario occurs if the the same ticker data is being called for the same time for the day. As indicated below, the data was already written into the file from the previous API call. Hence, its being read from the File.  
 
-![Output1(docs/output1.png)
+![Output1](docs/output1.png)
 2.	Retrieving data from the API – when the call is being made for the first time for the day – the system reads the log file and if the log for the day doesn’t exist – the data will be retrieved from the API and the new log will be written into the log file.	
 
-![Output1(docs/output2.png)
+![Output1](docs/output2.png)
 
 ## Class Hierarchy and Model
 
