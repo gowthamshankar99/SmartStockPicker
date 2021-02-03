@@ -74,15 +74,23 @@ public abstract class AbstractCompany {
 		return 0;
 	}
 	
-	public Boolean readFile(AbstractCompany abstractCompany, File file) throws FileNotFoundException {
+	
+	// Read the respective industry File to see if the Ticker Exist before doing API call
+	public Boolean readFile(AbstractCompany abstractCompany, File file, String tickerName) throws FileNotFoundException {
+		// Using Scanner to read the file - as the file type is always a text file
 		Scanner scanner = new Scanner(file);
-		
-		while(scanner.next() != null)
+		// Check if there is any more lines in the file to read
+		while(scanner.hasNext())
 		{
-			System.out.println(scanner.next());
+			//System.out.println(scanner.next().toLowerCase().trim() + "=" + tickerName.toLowerCase().trim());
+			// Print the Line from the file
+			if(scanner.next().toLowerCase().trim().contentEquals(tickerName.trim().toLowerCase()))
+				// returns true if the Ticker exist in the file
+				return true;		
 		}
-		
+		// Close the Scanner Object
 		scanner.close();
+		// returns true if the Ticker exist in the file (or) Returns false if the ticker doesnt exist in the file
 		return false;
 	}
 	

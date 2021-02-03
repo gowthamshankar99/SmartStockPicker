@@ -69,8 +69,21 @@ public class Main {
 
  	}
 	
+	/*
+	 * Intent : Passes the User input to the API and gets the Stock Quote back.
+	 */
 	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName) throws IOException, ParseException
 	{
+		/*
+		 * PRE_CONDITION: tickerName should be a valid ticker Name.
+		 * tickerName should be a one of the ticker name that's available in the respective
+		 * ticker File (Automobile/Finance/Healthcare/Insurance/Technology)
+		 */
+		
+		/*
+		 * POST_CONDITION : If all precondition posts are satisfied, the stock quote, high price,
+		 * low price, volume are returned back
+		 */
 		String result = "";
 		if(whatIndustry == 1) //  .contentEquals("Technology")
 		{
@@ -82,6 +95,8 @@ public class Main {
 			// Downcasting the object to Tech object to access TechnologyCompany Class related Methods
 			 TechnologyCompany techCompnyForActiveUsersCount = (TechnologyCompany)companyStock;
 			 techCompnyForActiveUsersCount.getActiveSubscribersCount();
+			 
+
 		}
 		else if(whatIndustry == 2) { // .contentEquals("Finance")
 			System.out.println("should be here" + tickerName);
@@ -103,13 +118,16 @@ public class Main {
 			result = companyStock.getstockDetails(tickerName);
 		}
 		
-		if(result == null)
+		if(result == null || result == "")
 		{
 			System.out.println("Something went wrong while performing the API call!");
 			System.exit(99);
 		}
 		
 		
+		
+		
+		System.out.println("what is in the result string " +  result);
 		JSONParser parser = new JSONParser();
 		JSONObject obj = (JSONObject)parser.parse(result);
 		JSONObject obj2 = (JSONObject)obj.get("Global Quote");

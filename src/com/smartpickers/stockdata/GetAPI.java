@@ -8,9 +8,17 @@ import java.net.URL;
 
 public class GetAPI {
 
-	
+	/*
+	 * Intent: Get the Stock Details from the alphaadvantage API and return the data
+	 */
 	public String getApiData(String tickerName) throws IOException
 	{
+		/*
+		 * PRE_CONDITION : tickerName should be a valid Ticker Name, tickerName should not be a null value
+		 */
+		/*
+		 * POST_CONDITION : return the JSON dump
+		 */
 		System.out.println("Getting stock price for the ticker " + tickerName + "\n");
 		URL urlForGetRequest = new URL("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="+tickerName + "&apikey=" + "PTQSQULZN28J4N6E");
 	    String readLine = null;

@@ -1,8 +1,7 @@
 package com.smartpickers.companies;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.smartpickers.stockdata.GetAPI;
 
@@ -18,28 +17,41 @@ public class HealthCareCompany extends AbstractCompany implements IStockIndex  {
 	 
 	
 
-	// Creating ArrayList to hold Stock Tickers
-	List<String> healthcareCompanies;
+//	// Creating ArrayList to hold Stock Tickers
+//	List<String> healthcareCompanies;
 	
 	private GetAPI getAPI;
 	
 	 public HealthCareCompany(GetAPI getAPI) {
 		 this.getAPI = getAPI;
 		 
-		 healthcareCompanies = new ArrayList<String>();
-		 healthcareCompanies.add(ANTHEM);
-		 healthcareCompanies.add(CIGNA);
-		 healthcareCompanies.add(CVS);
-		 healthcareCompanies.add(HUMANA);
+//		 healthcareCompanies = new ArrayList<String>();
+//		 healthcareCompanies.add(ANTHEM);
+//		 healthcareCompanies.add(CIGNA);
+//		 healthcareCompanies.add(CVS);
+//		 healthcareCompanies.add(HUMANA);
 		 
 	 }
 
-
+	 
+	/*
+	 *  Intent: Get Stock Details from the API and send the data to Console
+	 */
 	@Override
 	public String getstockDetails(String tickerName) throws IOException {
-		// get stock data from the API
+		/*
+		 *  PRE_CONDITION: tickerName should not be null, tickerName should be one of the 
+		 *  values from the HealthCareFile for the quote to work 
+		 * 
+		 */	
+		
+		/*
+		 *  POST_CONDITION : returns the stock quote, high value, low value from the API 
+		 */
 		System.out.println("Getting stock data for HealthCare Stocks!");
-		if(!this.healthcareCompanies.contains(tickerName))
+		File HealthcareFile = new File("Healthcare.txt");
+		// If the file doesnt contain the ticker - fail the process
+		if(!readFile(this, HealthcareFile, tickerName))
 			System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Healthcare Company!");
 		else
 		{
