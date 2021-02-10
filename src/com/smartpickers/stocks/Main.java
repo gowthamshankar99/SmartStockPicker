@@ -28,6 +28,15 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException {
 
+		final String ANSI_RESET = "\u001B[0m";
+		final String ANSI_BLACK = "\u001B[30m";
+		final String ANSI_RED = "\u001B[31m";
+		final String ANSI_GREEN = "\u001B[32m";
+		final String ANSI_YELLOW = "\u001B[33m";
+		final String ANSI_BLUE = "\u001B[34m";
+		final String ANSI_PURPLE = "\u001B[35m";
+		final String ANSI_CYAN = "\u001B[36m";
+		final String ANSI_WHITE = "\u001B[37m";
 		
 		// what is today's date 
 		
@@ -170,13 +179,22 @@ public class Main {
 					// check if the tickers are available
 					boolean firstTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[0]);
 					boolean secondTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[1]);
-					System.out.println(firstTicker);
-					System.out.println(secondTicker);
 					
 					if(!(firstTicker && secondTicker))
 					{
 						System.err.println("One or Both tickers are not part of the same Industry! Please try again!\nFor example - AAPL,TWTR is a correct input as both Apple and Twitter as part of the same Industry!");
 						
+					}
+					else
+					{
+						// call the new API once built!
+						//System.out.println(companyStock.getPERatio(twoTickers.split(",")[0]));
+						//System.out.println(companyStock.getPERatio(twoTickers.split(",")[1]));
+						
+						String betterStock =  Double.parseDouble(companyStock.getPERatio(twoTickers.split(",")[0])) < Double.parseDouble(companyStock.getPERatio(twoTickers.split(",")[1])) ? twoTickers.split(",")[0] : twoTickers.split(",")[1];
+						
+						System.err.println("Comparing the PERatio between the two stocks " + twoTickers.split(",")[0] + " and " +twoTickers.split(",")[1] + ", " + betterStock + " is the Better Buy!");
+	                    System.out.println();				
 					}
 				}
 				break;

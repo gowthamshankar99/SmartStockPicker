@@ -7,9 +7,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.smartpickers.stockdata.GetAPI;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
 
 public abstract class AbstractCompany {
+	
+	private GetAPI getApi;
 	
 	
 	String tickerName;
@@ -30,6 +37,18 @@ public abstract class AbstractCompany {
 	// Getter Method for HeadQuarters
 	public void setHeadQuartersLocation(String headQuartersLocation) {
 		this.headQuartersLocation = headQuartersLocation;
+	}
+	
+	public String getPERatio(String tickerArray) throws IOException, ParseException {
+		
+		getApi = new GetAPI();
+
+		
+		JSONParser parser = new JSONParser();
+		JSONObject obj = (JSONObject)parser.parse(getApi.getApiData(tickerArray, "OVERVIEW"));
+		String peRatio = (String) obj.get("PERatio");
+
+		return peRatio;
 	}
 	
 	// Abstract method - implementation in the subclass

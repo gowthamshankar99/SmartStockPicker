@@ -55,10 +55,9 @@ public class AutomobileIndustryCompany extends AbstractCompany implements IStock
 			throw new InvalidTickerException("We cannot get a quote at this time! The problem is because the Company is not a Insurance Company!");
 		else
 		{
-			String getData = getApi.getApiData(tickerName);
+			String getData = getApi.getApiData(tickerName, "GLOBAL_QUOTE");
 			return getData;
 		}
-		//return null;
 	}
 
 	/*

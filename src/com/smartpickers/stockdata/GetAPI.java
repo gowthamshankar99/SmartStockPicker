@@ -7,11 +7,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class GetAPI {
+	// Create a constant for API Key
+	public static final String apiKey = "PTQSQULZN28J4N6E";
 
 	/*
 	 * Intent: Get the Stock Details from the alphaadvantage API and return the data
 	 */
-	public String getApiData(String tickerName) throws IOException
+	public String getApiData(String tickerName,String function) throws IOException
 	{
 		/*
 		 * PRE_CONDITION : tickerName should be a valid Ticker Name, tickerName should not be a null value
@@ -20,7 +22,7 @@ public class GetAPI {
 		 * POST_CONDITION : return the JSON dump
 		 */
 		System.out.println("Getting stock price for the ticker " + tickerName + "\n");
-		URL urlForGetRequest = new URL("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="+tickerName + "&apikey=" + "PTQSQULZN28J4N6E");
+		URL urlForGetRequest = new URL("https://www.alphavantage.co/query?function=" + function +  "&symbol="+tickerName + "&apikey=" + apiKey);
 	    String readLine = null;
 	    HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
 	    connection.setRequestMethod("GET");
@@ -36,7 +38,6 @@ public class GetAPI {
 	        } in .close();
 	        return response.toString();
 	    } else {
-	        
 	        return "issue with the API call";
 	    }
 	}

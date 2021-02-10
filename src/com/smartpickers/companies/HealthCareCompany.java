@@ -57,7 +57,7 @@ public class HealthCareCompany extends AbstractCompany implements IStockIndex  {
 			//System.err.println("We cannot get a quote at this time! The problem is because the Company is not a Healthcare Company!");
 		else
 		{
-			String getData = getAPI.getApiData(tickerName);
+			String getData = getAPI.getApiData(tickerName, "GLOBAL_QUOTE");
 			System.out.println(getData);
 			return getData;
 		}
