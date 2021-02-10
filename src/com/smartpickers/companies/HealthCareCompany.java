@@ -10,28 +10,11 @@ public class HealthCareCompany extends AbstractCompany implements IStockIndex  {
 	
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks
-	
-	 static final String ANTHEM = "ANTM";
-	 static final String CIGNA = " CI";
-	 static final String CVS = "CVS";
-	 static final String HUMANA = "HUM";
-	 
-	
 
-//	// Creating ArrayList to hold Stock Tickers
-//	List<String> healthcareCompanies;
-	
 	private GetAPI getAPI;
 	
 	 public HealthCareCompany(GetAPI getAPI) {
 		 this.getAPI = getAPI;
-		 
-//		 healthcareCompanies = new ArrayList<String>();
-//		 healthcareCompanies.add(ANTHEM);
-//		 healthcareCompanies.add(CIGNA);
-//		 healthcareCompanies.add(CVS);
-//		 healthcareCompanies.add(HUMANA);
-		 
 	 }
 
 	 

@@ -12,13 +12,7 @@ public class TechnologyCompany extends AbstractCompany implements IStockIndex {
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks - the below has been commented for now as the ticker has been loaded 
 	// from the File for now
-	
-//	 static final String APPLE = "AAPL";
-//	 static final String GOOGLE = "GOOG";
-//	 static final String IBM = "IBM";
-//	 static final String PELATON = "PTON";
-//	 static final String CISCO = "CSCO";
-	
+
 
 	// Creating ArrayList to hold Stock Tickers
 	List<String> technologyCompanies;
@@ -28,13 +22,6 @@ public class TechnologyCompany extends AbstractCompany implements IStockIndex {
 	public TechnologyCompany(GetAPI getApi) {
 		this.getApi = getApi;
 
-//		// initialize the arrayList
-//		technologyCompanies = new ArrayList<String>();
-//		// load the companies into the list
-//		technologyCompanies.add(APPLE);
-//		technologyCompanies.add(GOOGLE);
-//		technologyCompanies.add(IBM);
-//		technologyCompanies.add(PELATON);
 		
 	}
 	

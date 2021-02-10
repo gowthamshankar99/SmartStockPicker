@@ -7,10 +7,7 @@ import com.smartpickers.stockdata.GetAPI;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
 
 public class AutomobileIndustryCompany extends AbstractCompany implements IStockIndex  {
-	
-	
-//	static final String FORD = "F";
-//	static final String TESLA = "TSLA";
+
 	 
 	private GetAPI getApi;
 	
@@ -22,10 +19,6 @@ public class AutomobileIndustryCompany extends AbstractCompany implements IStock
 		// Databases in the coming weeks - this has been changed to reading the tickers from a file
 		this.getApi = getApi;
 		
-//		//initialize the list to add the companies that can be queried
-//		automobileCompanyList = new ArrayList<String>();
-//		automobileCompanyList.add(FORD);
-//		automobileCompanyList.add(TESLA);
 	}
 	
 	public double getSalesoutput() {

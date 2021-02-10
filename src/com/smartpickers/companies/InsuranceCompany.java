@@ -10,27 +10,11 @@ public class InsuranceCompany extends AbstractCompany implements IStockIndex {
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks - this has been commented out for now - this is being 
 	// read from a file for now
-	
-//	 static final String THEHARTFORD = "HIG";
-//	 static final String TRAVELLERS = "TRV";
-//	 static final String MASSMUTUAL = "MCI";
-//	 static final String ALLSTATE = "ALL";
-	
 
-//	// Creating ArrayList to hold Stock Tickers
-//	List<String> insuranceCompanies;
-	
 	private GetAPI getApi;
 	
 	public InsuranceCompany(GetAPI getApi) {
 		this.getApi = getApi;
-		
-		// Initialize the list
-//		insuranceCompanies = new ArrayList<String>();
-//		insuranceCompanies.add(THEHARTFORD);
-//		insuranceCompanies.add(TRAVELLERS);
-//		insuranceCompanies.add(MASSMUTUAL);
-//		insuranceCompanies.add(ALLSTATE);
 	}
 	
 	public double getCurrentStandardPremiumAmount() {

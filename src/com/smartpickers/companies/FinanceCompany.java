@@ -10,29 +10,11 @@ public class FinanceCompany extends AbstractCompany implements IStockIndex {
 	
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks - this has been changed to reading the tickers from a file
-	
-//	 static final String BOFA = "BAC";
-//	 static final String WELLSFARGO = "WFC";
-//	 static final String JPM = "JPM";
-//	 static final String CITIGROUP = "C";
-	 
-	
 
-//	// Creating ArrayList to hold Stock Tickers
-//	List<String> financeCompanies;
-	
 	private GetAPI getApi;
 	
 	public FinanceCompany(GetAPI getApi) {
 		this.getApi = getApi;
-		
-		
-//		// Initialize the arraylist
-//		financeCompanies = new ArrayList<String>();
-//		financeCompanies.add(BOFA);
-//		financeCompanies.add(WELLSFARGO);
-//		financeCompanies.add(JPM);
-//		financeCompanies.add(CITIGROUP);
 	}
 	
 	public double getLoanOutstanding()
