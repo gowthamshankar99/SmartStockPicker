@@ -27,19 +27,7 @@ public class Main {
 	 * The application intends to ask a series of Questions to the User related to investment 
 	 * to help the User make better investment decisions
 	 */
-	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException {
-
-		final String ANSI_RESET = "\u001B[0m";
-		final String ANSI_BLACK = "\u001B[30m";
-		final String ANSI_RED = "\u001B[31m";
-		final String ANSI_GREEN = "\u001B[32m";
-		final String ANSI_YELLOW = "\u001B[33m";
-		final String ANSI_BLUE = "\u001B[34m";
-		final String ANSI_PURPLE = "\u001B[35m";
-		final String ANSI_CYAN = "\u001B[36m";
-		final String ANSI_WHITE = "\u001B[37m";
-		
-		
+	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException {		
 		
 		// what is today's date 
 		
@@ -52,7 +40,7 @@ public class Main {
 		File logFile = new File("DailyTickerLog.txt");
 		
 		AbstractCompany companyStock = null;
-		StockDetailExtractor<TechnologyCompany> stockDetailExtractor = null;
+		StockDetailExtractor<AbstractCompany> stockDetailExtractor = null;
 		
 		// Get API Object
 		 GetAPI api = new GetAPI();
