@@ -15,6 +15,7 @@ import com.smartpickers.companies.AbstractCompany;
 import com.smartpickers.companies.AutomobileIndustryCompany;
 import com.smartpickers.companies.FinanceCompany;
 import com.smartpickers.companies.InsuranceCompany;
+import com.smartpickers.companies.StockDetailExtractor;
 import com.smartpickers.companies.TechnologyCompany;
 import com.smartpickers.stockdata.GetAPI;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
@@ -38,6 +39,8 @@ public class Main {
 		final String ANSI_CYAN = "\u001B[36m";
 		final String ANSI_WHITE = "\u001B[37m";
 		
+		
+		
 		// what is today's date 
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
@@ -49,6 +52,7 @@ public class Main {
 		File logFile = new File("DailyTickerLog.txt");
 		
 		AbstractCompany companyStock = null;
+		StockDetailExtractor<TechnologyCompany> stockDetailExtractor = null;
 		
 		// Get API Object
 		 GetAPI api = new GetAPI();
@@ -156,6 +160,7 @@ public class Main {
 					if(getStockLister == 1)
 					{
 						// create the technology Object
+						// IStockExtractor 
 						companyStock = new TechnologyCompany(api);
 						listerFile = new File("Technology.txt");
 					}
@@ -173,9 +178,11 @@ public class Main {
 					else if(getStockLister == 4) {
 						// create the Automobile Object
 						companyStock = new AutomobileIndustryCompany(api);
+						
 						listerFile = new File("Automobile.txt");
 					}
 					
+					stockDetailExtractor = new StockDetailExtractor(companyStock, api);
 					// check if the tickers are available
 					boolean firstTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[0]);
 					boolean secondTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[1]);
@@ -187,11 +194,8 @@ public class Main {
 					}
 					else
 					{
-						// call the new API once built!
-						//System.out.println(companyStock.getPERatio(twoTickers.split(",")[0]));
-						//System.out.println(companyStock.getPERatio(twoTickers.split(",")[1]));
 						
-						String betterStock =  Double.parseDouble(companyStock.getPERatio(twoTickers.split(",")[0])) < Double.parseDouble(companyStock.getPERatio(twoTickers.split(",")[1])) ? twoTickers.split(",")[0] : twoTickers.split(",")[1];
+						String betterStock =  Double.parseDouble(stockDetailExtractor.getPERatio(twoTickers.split(",")[0])) < Double.parseDouble(stockDetailExtractor.getPERatio(twoTickers.split(",")[1])) ? twoTickers.split(",")[0] : twoTickers.split(",")[1];
 						
 						System.err.println("Comparing the PERatio between the two stocks " + twoTickers.split(",")[0] + " and " +twoTickers.split(",")[1] + ", " + betterStock + " is the Better Buy!");
 	                    System.out.println();				

@@ -39,17 +39,7 @@ public abstract class AbstractCompany {
 		this.headQuartersLocation = headQuartersLocation;
 	}
 	
-	public String getPERatio(String tickerArray) throws IOException, ParseException {
-		
-		getApi = new GetAPI();
 
-		
-		JSONParser parser = new JSONParser();
-		JSONObject obj = (JSONObject)parser.parse(getApi.getApiData(tickerArray, "OVERVIEW"));
-		String peRatio = (String) obj.get("PERatio");
-
-		return peRatio;
-	}
 	
 	// Abstract method - implementation in the subclass
 	public abstract String getstockDetails(String tickerName) throws IOException, InvalidTickerException;
