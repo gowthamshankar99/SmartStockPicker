@@ -34,11 +34,6 @@ public abstract class AbstractCompany {
 	
 	// Abstract method - implementation in the subclass
 	public abstract String getstockDetails(String tickerName) throws IOException, InvalidTickerException;
-	
-
-	
-	
-	
 	/*
 	 * Intent:  Read the respective industry File to see if the Ticker Exist before doing API call
 	 */

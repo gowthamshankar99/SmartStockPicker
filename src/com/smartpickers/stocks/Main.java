@@ -126,6 +126,9 @@ public class Main {
 				
 				break;
 			case 3:
+				System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Insurance\n4. Automobile\n");
+				getStockLister = scanner.nextInt();
+				
 				// call smart stock picker API - yet to be implemented
 				System.out.println("Pick 2 companies from the same Industry! Example - APPL,TWTR");
 				System.out.println("Please make sure to input it in a comma separated String like APPL,TWTR");
@@ -140,7 +143,6 @@ public class Main {
 				else
 				{
 					// Check and see if both companies are part of the Same Industry
-					getStockLister = scanner.nextInt();
 					listerFile = null;
 					if(getStockLister == 1)
 					{
@@ -165,6 +167,17 @@ public class Main {
 						listerFile = new File("Automobile.txt");
 					}
 					
+					// check if the tickers are available
+					boolean firstTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[0]);
+					boolean secondTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[1]);
+					System.out.println(firstTicker);
+					System.out.println(secondTicker);
+					
+					if(!(firstTicker && secondTicker))
+					{
+						System.err.println("One or Both tickers are not part of the same Industry! Please try again!\nFor example - AAPL,TWTR is a correct input as both Apple and Twitter as part of the same Industry!");
+						
+					}
 				}
 				break;
 			default:
