@@ -92,12 +92,80 @@ public class Main {
 				break;
 				
 			case 2:
-				 // call smart stock picker API - yet to be implemented
+				// call get the list of all major tech industry stocks names - yet to be implemented	 
 				 System.out.println("Call smart stock picker API");
-				 break;
+				// call getstockquoteAPI
+					
+				System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Insurance\n4. Automobile\n");
+				int getStockLister = scanner.nextInt();
+				File listerFile = null;
+				if(getStockLister == 1)
+				{
+					// create the technology Object
+					companyStock = new TechnologyCompany(api);
+					listerFile = new File("Technology.txt");
+				}
+				else if(getStockLister == 2) {
+					// create the Finance Object
+					companyStock = new FinanceCompany(api);
+					listerFile = new File("Finance.txt");				
+				}
+				else if(getStockLister == 3) {
+					// create the Insurance Object
+					companyStock = new InsuranceCompany(api);
+					listerFile = new File("Finance.txt");
+					
+				}
+				else if(getStockLister == 4) {
+					// create the Automobile Object
+					companyStock = new AutomobileIndustryCompany(api);
+					listerFile = new File("Automobile.txt");
+				}
+				System.out.println("\nThe Companies listed under the Requested Industry are\n");
+				companyStock.printTickerFile(listerFile);
+				
+				break;
 			case 3:
-				// call get the list of all major tech industry stocks names - yet to be implemented
-				System.out.println();
+				// call smart stock picker API - yet to be implemented
+				System.out.println("Pick 2 companies from the same Industry! Example - APPL,TWTR");
+				System.out.println("Please make sure to input it in a comma separated String like APPL,TWTR");
+				
+				String twoTickers = scanner.next();
+				if(twoTickers.split(",").length != 2)
+				{
+					System.err.println("The Input entered is not in the correct format!");
+					System.err.println("Please enter the details in this format - AAPL,TWTR (comma separated)!!");
+				
+				}
+				else
+				{
+					// Check and see if both companies are part of the Same Industry
+					getStockLister = scanner.nextInt();
+					listerFile = null;
+					if(getStockLister == 1)
+					{
+						// create the technology Object
+						companyStock = new TechnologyCompany(api);
+						listerFile = new File("Technology.txt");
+					}
+					else if(getStockLister == 2) {
+						// create the Finance Object
+						companyStock = new FinanceCompany(api);
+						listerFile = new File("Finance.txt");				
+					}
+					else if(getStockLister == 3) {
+						// create the Insurance Object
+						companyStock = new InsuranceCompany(api);
+						listerFile = new File("Finance.txt");
+						
+					}
+					else if(getStockLister == 4) {
+						// create the Automobile Object
+						companyStock = new AutomobileIndustryCompany(api);
+						listerFile = new File("Automobile.txt");
+					}
+					
+				}
 				break;
 			default:
 				System.out.println("Wrong option selected!");

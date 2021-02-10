@@ -1,7 +1,7 @@
-2021/02/03-AAPL
-Current Price 134.9900
-Previous High 136.3100
-Previous Low 134.6100
-Current Volume 82266419
+2021/02/09-AAPL
+Current Price 136.0100
+Previous High 137.8770
+Previous Low 135.8500
+Current Volume 75986989
 ********************
 

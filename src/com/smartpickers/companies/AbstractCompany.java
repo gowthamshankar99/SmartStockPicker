@@ -35,46 +35,7 @@ public abstract class AbstractCompany {
 	// Abstract method - implementation in the subclass
 	public abstract String getstockDetails(String tickerName) throws IOException, InvalidTickerException;
 	
-	/**
-	 * This Method doesnt need to be a abstract method - all stocks regadless of what industry they belong to - have the same P/E ratio calculation
-	 * @returns a  double value
-	 */
-	public double getPERatio() {
-		//  yet to be implemented
-		return 0;
-	}
-	
-	/**
-	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
-	 * @returns a  double value
-	 */
-	
-	public double getEPS() {
-		return 0;
-	}
-	/**
-	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
-	 * @returns a  double value
-	 */
-	public double getDEquityRatio() {
-		return 0;
-	}
-	
-	/**
-	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
-	 * @returns a  double value
-	 */
-	public double getLongTermAssets() {
-		return 0;
-	}
-	
-	/**
-	 * This Method doesnt need to be a abstract method - all stocks regardless of what industry they belong to - have the same P/E ratio calculation
-	 * @returns a  double value
-	 */
-	public double getShortTermAssets() {
-		return 0;
-	}
+
 	
 	
 	
@@ -108,6 +69,14 @@ public abstract class AbstractCompany {
 		return false;
 	}
 	
+	public void printTickerFile(File file) throws FileNotFoundException
+	{
+		Scanner scanner = new Scanner(file);
+		while(scanner.hasNext())
+		{
+			System.out.println(scanner.next());
+		}
+	}
 	
 	/*
 	 * Intent:  Write Logs to the Log file if the call is being made for the first time
