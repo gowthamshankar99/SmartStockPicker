@@ -1,24 +1,23 @@
 package com.smartpickers.companies;
 
-import java.io.BufferedWriter;
+import java.util.List;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.smartpickers.stockdata.GetAPI;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
 
-public abstract class AbstractCompany {
+public abstract class AbstractCompany implements Serializable {
 	
 	private GetAPI getApi;
 	
-	
+	List<String> tickerList = new ArrayList<String>();
 	String tickerName;
 	String headQuartersLocation;
 	
@@ -78,29 +77,31 @@ public abstract class AbstractCompany {
 		Scanner scanner = new Scanner(file);
 		while(scanner.hasNext())
 		{
-			System.out.println(scanner.next());
+//			System.out.println(scanner.next());
 		}
 	}
 	
-	/*
-	 * Intent:  Write Logs to the Log file if the call is being made for the first time
-	 */
-	
-	/*
-	 * PRE_CONDITION: The Log file should be present and the application assumes 
-	 * that the file already exists
-	 */
-	
-	/*
-	 * POST_CONDITION: Writes the Quote values to the log file using BufferedWriter
-	 */
-	public void writeDailyLogs(File file, String data) throws IOException {
 
-		BufferedWriter out = new BufferedWriter(new FileWriter(file));
+	public void writeDailyLogs(String file, String data) throws IOException {
+		/*
+		 * Intent:  Write Logs to the Log file if the call is being made for the first time
+		 */
 		
-		out.write(data+"\n");
-		out.newLine();
+		/*
+		 * PRE_CONDITION: The Log file should be present and the application assumes 
+		 * that the file already exists
+		 */
 		
+		/*
+		 * POST_CONDITION: Writes the Quote values to the log file using BufferedWriter
+		 */
+		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+		
+		// add a new line to the input string 
+		data = data+"\n\n";
+		// Convert Data string to byte array 
+		byte b[] = data.getBytes();
+		out.write(b);
 		out.close();
 		
 		

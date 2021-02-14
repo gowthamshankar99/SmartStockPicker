@@ -2,13 +2,18 @@ package com.smartpickers.companies;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.smartpickers.stockdata.GetAPI;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
 
-public class AutomobileIndustryCompany extends AbstractCompany implements IStockIndex  {
+public class AutomobileIndustryCompany extends AbstractCompany implements IStockIndex, Serializable {
 
 	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private GetAPI getApi;
 	
 //	private List<String> automobileCompanyList;

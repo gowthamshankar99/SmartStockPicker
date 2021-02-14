@@ -2,12 +2,13 @@ package com.smartpickers.companies;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import com.smartpickers.stockdata.GetAPI;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
 
-public class TechnologyCompany extends AbstractCompany implements IStockIndex {
+public class TechnologyCompany extends AbstractCompany implements IStockIndex, Serializable {
 
 	// Create Static ticker names for now - this will eventually get loaded from a
 	// Databases in the coming weeks - the below has been commented for now as the ticker has been loaded 

@@ -1,8 +1,15 @@
 package com.smartpickers.stocks;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -38,6 +45,7 @@ public class Main {
 		
 		// Create File object for Log file
 		File logFile = new File("DailyTickerLog.txt");
+		String logFileString = "DailyTickerLog.txt";
 		
 		AbstractCompany companyStock = null;
 		StockDetailExtractor<AbstractCompany> stockDetailExtractor = null;
@@ -73,12 +81,12 @@ public class Main {
 				 *  has already been made
 				 */
 					
-				String datafromLogFile = readLogFile(logFile, tickerName, dtf.format(now));
+				String datafromLogFile = readLogFile(logFileString, tickerName, dtf.format(now));
 				if (datafromLogFile.contentEquals("data not present"))
 					// The call for the day has never been made - grab the data from the api
 				{
 					try {
-						stockProcessor(getStockOption, companyStock, api,tickerName, logFile,dtf.format(now));	
+						stockProcessor(getStockOption, companyStock, api,tickerName, logFileString,dtf.format(now));	
 					}
 					catch(InvalidTickerException ex)
 					{
@@ -202,7 +210,7 @@ public class Main {
 	/*
 	 * Intent : Passes the User input to the API and gets the Stock Quote back.
 	 */
-	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName, File logFile,String todaysDate) throws IOException, ParseException, InvalidTickerException
+	public static void stockProcessor(int whatIndustry, AbstractCompany companyStock, GetAPI api,String tickerName, String logFile,String todaysDate) throws IOException, ParseException, InvalidTickerException
 	{
 		/*
 		 * PRE_CONDITION: tickerName should be a valid ticker Name.
@@ -277,7 +285,7 @@ public class Main {
 	 * if -> it contains, return the data from the log file
 	 * else -> return  "data not present"
 	 */
-	public static String readLogFile(File file,String tickerName, String todaysDate) throws FileNotFoundException {	
+	public static String readLogFile(String file,String tickerName, String todaysDate) throws FileNotFoundException {	
 		/*
 		 * PRE_CONDITION: The File file needs to exist in order for the application to read the file. 
 		 * The application assumes that, the file exist.
@@ -286,15 +294,66 @@ public class Main {
 		/*
 		 * POST_CONDITION: The method returns data from the log file or returns "no data present"
 		 */
-		Scanner scanner = new Scanner(file);
-		while(scanner.hasNext())
-		{
-			if(scanner.next().trim().contentEquals(todaysDate + "-" + tickerName))
-				return scanner.nextLine() + "\n" + scanner.nextLine() + "\n" + scanner.nextLine() + "\n" + scanner.nextLine();
-		}
-		scanner.close();
+	// Using BufferedReader and InputStreamReader to read the Log File	
+	try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 		
+		String linesFromOutputFile = "";
+		
+		while((linesFromOutputFile = br.readLine()) != null)
+		{
+			/*
+			 * if a line is present in the log file - it will always contain the 4 lines 
+			 * 
+			 * Sample Data from Log File
+			 * 
+			 *  2021/02/13-AAPL
+				Current Price 135.3700
+				Previous High 135.5300
+				Previous Low 133.6921
+				Current Volume 60145130
+				********************
+			 */
+			
+			if(linesFromOutputFile.trim().contentEquals(todaysDate + "-" + tickerName))
+				return linesFromOutputFile + "\n" + br.readLine() + "\n" + br.readLine() + "\n" + br.readLine();
+		}
+			
+	}
+	catch(IOException ex)
+	{
+		System.err.println("Something wrong with the file read");
+	}
 		return "data not present";
 	}
-
+	
+	/*
+	 * Intent : Serialize Industry Object and write it into a file
+	 */
+	/*
+	 * PRE_CONDITION: The file must exist for the method to work 
+	 * Object should not be  null
+	 */
+	public void SerializeIndustryObject(AbstractCompany abstractCompany) throws FileNotFoundException, IOException {
+		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("serializedObject"))) {
+			// Write object into
+			out.writeObject(abstractCompany);
+			
+		}
+	}
+	/*
+	 * Intent : Serialize Industry Object and Read from the file.
+	 */
+	/*
+	 * PRE_CONDITION: The file must exist for the method to work 
+	 *  Class must exist in order for the deserialization to work
+	 * 
+	 */	
+	public void deSerializeIndustryObject(String fileLocation) throws FileNotFoundException, IOException, ClassNotFoundException	 {
+			try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("serializedObject"))) {
+		
+				// Display the Object contents
+					System.out.println((AbstractCompany) in.readObject());
+			}
+	}
 }
+
