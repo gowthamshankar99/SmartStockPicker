@@ -27,6 +27,10 @@ import com.smartpickers.companies.TechnologyCompany;
 import com.smartpickers.stockdata.GetAPI;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+
 public class Main {
 
 	/*
@@ -54,6 +58,7 @@ public class Main {
 		 GetAPI api = new GetAPI();
 		 
 		
+		 
 		// Get the Set of Questions
 		
 		Scanner scanner = new Scanner(System.in);
@@ -86,7 +91,8 @@ public class Main {
 					// The call for the day has never been made - grab the data from the api
 				{
 					try {
-						stockProcessor(getStockOption, companyStock, api,tickerName, logFileString,dtf.format(now));	
+						stockProcessor(getStockOption, companyStock, api,tickerName, logFileString,dtf.format(now));
+						SerializeIndustryObject(companyStock);
 					}
 					catch(InvalidTickerException ex)
 					{
@@ -98,6 +104,7 @@ public class Main {
 				else
 					System.out.println("Reading data from the File");
 					System.out.println(datafromLogFile);
+				
 				break;
 				
 			case 2:
@@ -333,8 +340,8 @@ public class Main {
 	 * PRE_CONDITION: The file must exist for the method to work 
 	 * Object should not be  null
 	 */
-	public void SerializeIndustryObject(AbstractCompany abstractCompany) throws FileNotFoundException, IOException {
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("serializedObject"))) {
+	public static void SerializeIndustryObject(AbstractCompany abstractCompany) throws FileNotFoundException, IOException {
+		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("ObjectSerializer.txt"))) {
 			// Write object into
 			out.writeObject(abstractCompany);
 			
@@ -348,12 +355,13 @@ public class Main {
 	 *  Class must exist in order for the deserialization to work
 	 * 
 	 */	
-	public void deSerializeIndustryObject(String fileLocation) throws FileNotFoundException, IOException, ClassNotFoundException	 {
-			try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("serializedObject"))) {
+	public static void deSerializeIndustryObject(String fileLocation) throws FileNotFoundException, IOException, ClassNotFoundException	 {
+			try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("ObjectSerializer.txt"))) {
 		
 				// Display the Object contents
 					System.out.println((AbstractCompany) in.readObject());
 			}
 	}
+
 }
 

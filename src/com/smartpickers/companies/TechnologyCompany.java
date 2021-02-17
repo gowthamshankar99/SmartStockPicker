@@ -15,6 +15,11 @@ public class TechnologyCompany extends AbstractCompany implements IStockIndex, S
 	// from the File for now
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	// Creating ArrayList to hold Stock Tickers
 	List<String> technologyCompanies;
 

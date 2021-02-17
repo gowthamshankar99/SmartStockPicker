@@ -77,7 +77,13 @@ public abstract class AbstractCompany implements Serializable {
 		Scanner scanner = new Scanner(file);
 		while(scanner.hasNext())
 		{
-//			System.out.println(scanner.next());
+
+			// Push data to Array List
+			tickerList.add(scanner.next());
+			
+			// Use Lambda expression's for each to loop through the list and print the tickers
+			tickerList.forEach((n) -> System.out.println(n));
+			
 		}
 	}
 	
