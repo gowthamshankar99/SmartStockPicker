@@ -31,7 +31,13 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 
-public class Main {
+public class Main extends Thread {
+	
+	private String tickerName;
+	
+	public Main(String tickerName) {
+		this.tickerName = tickerName;
+	}	
 
 	/*
 	 * Intent: main method  - the program starts executing from here.
@@ -69,6 +75,7 @@ public class Main {
 		System.out.println("1. Get Stock Quote");
 		System.out.println("2. Get the list of all Major Tech Industry Stocks");
 		System.out.println("3. Compare two stocks and find a better Buy ?");
+		System.out.println("4. Get Stock Quote for Multiple Tickers");
 		
 		int getOption = scanner.nextInt();		
 		
@@ -106,6 +113,23 @@ public class Main {
 					System.out.println(datafromLogFile);
 				
 				break;
+			case 4:
+				// call getstockquoteAPI
+				
+				System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Insurance\n4. Automobile\n");
+				int getStockOptionMult = scanner.nextInt();
+				System.out.println("Enter the ticker Name! For Example - AAPL,TWTR,PTON - in a comma separated list\n");
+				String tickerNameMult = scanner.next();
+				// Create Thread
+				
+				// Split the ticker  names
+				for(int i =0;i<tickerNameMult.split(",").length;i++)
+				{
+					// 
+					Main thread1 = new Main(tickerNameMult.split(",")[i]);
+					thread1.run(); // Multiple threads will be spawned based on the number of ticker quotes asked for
+					
+				}
 				
 			case 2:
 				// call get the list of all major tech industry stocks names - yet to be implemented	 
@@ -362,6 +386,22 @@ public class Main {
 					System.out.println((AbstractCompany) in.readObject());
 			}
 	}
+	
+	public void run() {
+		System.out.println("Succesfully executed my first thread " + this.tickerName);
+		
+		// API calls with Alpha Stock Advantage 
+		
+		GetAPI getAPI = new GetAPI();
+		try {
+			String apiDetails = getAPI.getApiData(this.tickerName, "OVERVIEW");
+			System.out.println(apiDetails);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
+
 
