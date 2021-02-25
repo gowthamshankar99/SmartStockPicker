@@ -34,6 +34,11 @@ import javafx.stage.Stage;
 public class Main extends Thread {
 	
 	private String tickerName;
+	private static String result;
+	private static String logFileString = "DailyTickerLog.txt";
+	private String logFile; 
+	private static AbstractCompany companyStock;
+
 	
 	public Main(String tickerName) {
 		this.tickerName = tickerName;
@@ -44,7 +49,7 @@ public class Main extends Thread {
 	 * The application intends to ask a series of Questions to the User related to investment 
 	 * to help the User make better investment decisions
 	 */
-	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException {		
+	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException, InterruptedException {		
 		
 		// what is today's date 
 		
@@ -55,9 +60,9 @@ public class Main extends Thread {
 		
 		// Create File object for Log file
 		File logFile = new File("DailyTickerLog.txt");
-		String logFileString = "DailyTickerLog.txt";
+
 		
-		AbstractCompany companyStock = null;
+		//AbstractCompany companyStock = null;
 		StockDetailExtractor<AbstractCompany> stockDetailExtractor = null;
 		
 		// Get API Object
@@ -76,6 +81,7 @@ public class Main extends Thread {
 		System.out.println("2. Get the list of all Major Tech Industry Stocks");
 		System.out.println("3. Compare two stocks and find a better Buy ?");
 		System.out.println("4. Get Stock Quote for Multiple Tickers");
+		System.out.println("5. Exit the Application");
 		
 		int getOption = scanner.nextInt();		
 		
@@ -113,6 +119,9 @@ public class Main extends Thread {
 					System.out.println(datafromLogFile);
 				
 				break;
+			case 5:
+				System.exit(0);
+				break;
 			case 4:
 				// call getstockquoteAPI
 				
@@ -120,15 +129,37 @@ public class Main extends Thread {
 				int getStockOptionMult = scanner.nextInt();
 				System.out.println("Enter the ticker Name! For Example - AAPL,TWTR,PTON - in a comma separated list\n");
 				String tickerNameMult = scanner.next();
-				// Create Thread
+				if(getStockOptionMult == 1)
+					// create the technology Object
+					companyStock = new TechnologyCompany(api);
+				else if(getStockOptionMult == 2) 
+					// create the Finance Object
+					companyStock = new FinanceCompany(api);
+
+				else if(getStockOptionMult == 3)
+					// create the Insurance Object
+					companyStock = new InsuranceCompany(api);
+
+				else if(getStockOptionMult == 4) 
+					// create the Automobile Object
+					companyStock = new AutomobileIndustryCompany(api);
+				
+
+				// Create Thread Array 
+				Main[] threadArray = new Main[tickerNameMult.split(",").length];
+				
 				
 				// Split the ticker  names
-				for(int i =0;i<tickerNameMult.split(",").length;i++)
+				for(int i =0;i<threadArray.length;i++)
 				{
-					// 
-					Main thread1 = new Main(tickerNameMult.split(",")[i]);
-					thread1.run(); // Multiple threads will be spawned based on the number of ticker quotes asked for
-					
+					threadArray[i] = new Main(tickerNameMult.split(",")[i]);
+					threadArray[i].start(); // Multiple threads will be spawned based on the number of ticker quotes asked for
+				}
+				
+				// Split the ticker  names
+				for(int i =0;i<threadArray.length;i++)
+				{
+					threadArray[i].join(); // Multiple threads will be spawned based on the number of ticker quotes asked for
 				}
 				
 			case 2:
@@ -255,7 +286,7 @@ public class Main extends Thread {
 		 */
 
 		final String DELIMITER_LINE = "********************"; 
-		String result = "";
+		
 		if(whatIndustry == 1) //  .contentEquals("Technology")
 		{
 			// Create Technology Object - Objects are created dynamically using runtime Polymorphism
@@ -390,16 +421,48 @@ public class Main extends Thread {
 	public void run() {
 		System.out.println("Succesfully executed my first thread " + this.tickerName);
 		
+
 		// API calls with Alpha Stock Advantage 
 		
 		GetAPI getAPI = new GetAPI();
 		try {
-			String apiDetails = getAPI.getApiData(this.tickerName, "OVERVIEW");
-			System.out.println(apiDetails);
+			
+			result = getAPI.getApiData(this.tickerName, "GLOBAL_QUOTE");
+			parseObject();
+			//System.out.println(apiDetails);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
+	
+	public synchronized void parseObject() throws IOException, ParseException {
+		/*
+		 * Parse the JSON object using JSONParser to grab the 
+		 * intended data only from the JSON Dump
+		 */
+		
+		// what is today's date 
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+
+	    LocalDateTime now = LocalDateTime.now();  
+		System.out.println(dtf.format(now));
+		
+		System.out.println("what is in the result string " +  result);
+		JSONParser parser = new JSONParser();
+		JSONObject obj = (JSONObject)parser.parse(result);
+		JSONObject obj2 = (JSONObject)obj.get("Global Quote");
+        // Write data to the file to reduce API calls
+        companyStock.writeDailyLogs(logFileString, dtf.format(now) + "-" + this.tickerName + "\n" + "Current Price " + obj2.get("05. price") + "\n" + "Previous High " + obj2.get("03. high") + "\n" + "Previous Low " + obj2.get("04. low") + "\n" + "Current Volume " + obj2.get("06. volume") + "\n" + "********************");
+        
+        System.out.println("Current Price " + obj2.get("05. price"));
+        System.out.println("Previous High " + obj2.get("03. high"));
+        System.out.println("Previous Low " + obj2.get("04. low"));
+        System.out.println("Current Volume " + obj2.get("06. volume"));		
 	}
 
 }

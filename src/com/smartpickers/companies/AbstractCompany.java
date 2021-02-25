@@ -1,13 +1,13 @@
 package com.smartpickers.companies;
 
-import java.util.List;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.smartpickers.stockdata.GetAPI;
@@ -88,7 +88,7 @@ public abstract class AbstractCompany implements Serializable {
 	}
 	
 
-	public void writeDailyLogs(String file, String data) throws IOException {
+	public synchronized void writeDailyLogs(String file, String data) throws IOException {
 		/*
 		 * Intent:  Write Logs to the Log file if the call is being made for the first time
 		 */
@@ -101,20 +101,22 @@ public abstract class AbstractCompany implements Serializable {
 		/*
 		 * POST_CONDITION: Writes the Quote values to the log file using BufferedWriter
 		 */
-		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+//		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+//		
+//		// add a new line to the input string 
+//		data = data+"\n\n";
+//		// Convert Data string to byte array 
+//		byte b[] = data.getBytes();
+//		out.write(b);
+//		out.close();
 		
-		// add a new line to the input string 
-		data = data+"\n\n";
-		// Convert Data string to byte array 
-		byte b[] = data.getBytes();
-		out.write(b);
-		out.close();
+	     
+	    FileWriter fileWriter = new FileWriter(file, true); //Set true for append mode
+	    PrintWriter printWriter = new PrintWriter(fileWriter);
+	    printWriter.println(data);  //New line
+	    printWriter.close();
 		
 		
 	}
-	
-
-	
-	
 
 }

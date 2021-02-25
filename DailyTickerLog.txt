@@ -1,7 +1,12 @@
-2021/02/17-AAPL
-Current Price 133.1900
-Previous High 136.0100
-Previous Low 132.7900
-Current Volume 80576316
+2021/02/25-AAPL
+Current Price 125.3500
+Previous High 125.5600
+Previous Low 122.2300
+Current Volume 111039904
 ********************
-
+2021/02/25-TWTR
+Current Price 71.9200
+Previous High 73.9500
+Previous Low 71.7100
+Current Volume 17990288
+********************
