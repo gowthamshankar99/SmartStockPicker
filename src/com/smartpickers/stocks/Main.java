@@ -69,7 +69,7 @@ public class Main extends Thread {
 			ld.createStockOverviewTable(dbName, "COMPANY_OVERVIEW");
 			ld.intialDataLoad(dbName);
 			
-			ld.checkForTickerAvailability("AAPL", "TECHNOLOGY" ,"test.db");
+			ld.checkForTickerAvailability("AAPL", "TECHNOLOGY" ,dbName);
 		}
 		
 		// what is today's date 
@@ -150,19 +150,19 @@ public class Main extends Thread {
 				
 				if(getStockOption5 == 1)
 				{
-					ld.insertDataIntoIndustryTable("TECHNOLOGY", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+					ld.insertDataIntoIndustryTable("TECHNOLOGY", dbName, tickerName5.split(",")[0], tickerName5.split(",")[1]);
 				}
 				else if(getStockOption5 == 2)
 				{
-					ld.insertDataIntoIndustryTable("FINANCE", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+					ld.insertDataIntoIndustryTable("FINANCE", dbName, tickerName5.split(",")[0], tickerName5.split(",")[1]);
 				}
 				else if(getStockOption5 == 3)
 				{
-					ld.insertDataIntoIndustryTable("INSURANCE", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+					ld.insertDataIntoIndustryTable("INSURANCE",dbName , tickerName5.split(",")[0], tickerName5.split(",")[1]);
 				}
 				else if(getStockOption5 == 4)
 				{
-					ld.insertDataIntoIndustryTable("AUTOMOBILE", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+					ld.insertDataIntoIndustryTable("AUTOMOBILE", dbName, tickerName5.split(",")[0], tickerName5.split(",")[1]);
 				}
 
 				break;
@@ -324,7 +324,7 @@ public class Main extends Thread {
 						 *  and find the top 1st row to get the better buy of the two companies
 						 */
 						
-						String betterStock = ld.readOverviewTable("test.db", twoTickers.split(",")[0], twoTickers.split(",")[1]);
+						String betterStock = ld.readOverviewTable(dbName, twoTickers.split(",")[0], twoTickers.split(",")[1]);
 						 
 						
 						System.err.println("Comparing the PERatio between the two stocks " + twoTickers.split(",")[0] + " and " +twoTickers.split(",")[1] + ", " + betterStock + " is the Better Buy!");

@@ -73,30 +73,33 @@ public class LoadData {
     /*
      * Intent - Load the initial data into the Table - Insurance, Technology, Finance, Automobile
      */
-    public void intialDataLoad(String tableName) {
+    public void intialDataLoad(String databaseName) {
     	for(String techCom : this.technologyList)
     		/*
     		 * Load the Initial Data into the Technology database
     		 */
-    		insertDataIntoIndustryTable("TECHNOLOGY","test.db",techCom.split(",")[0], techCom.split(",")[1]);
+    		insertDataIntoIndustryTable("TECHNOLOGY",databaseName,techCom.split(",")[0], techCom.split(",")[1]);
     	for(String financeCom : this.financeList)
        		/*
     		 * Load the Initial Data into the Finance database
     		 */
-    		insertDataIntoIndustryTable("FINANCE","test.db",financeCom.split(",")[0], financeCom.split(",")[1]);
+    		insertDataIntoIndustryTable("FINANCE",databaseName,financeCom.split(",")[0], financeCom.split(",")[1]);
     	for(String insuranceCom : this.insuranceList)
        		/*
     		 */
-    		insertDataIntoIndustryTable("INSURANCE","test.db",insuranceCom.split(",")[0], insuranceCom.split(",")[1]);
+    		insertDataIntoIndustryTable("INSURANCE",databaseName,insuranceCom.split(",")[0], insuranceCom.split(",")[1]);
     	for(String autombileCom : this.automobileList)
        		/*
     		 * Load the Initial Data into the Automobile database
     		 */
-    		insertDataIntoIndustryTable("AUTOMOBILE","test.db",autombileCom.split(",")[0], autombileCom.split(",")[1]);
+    		insertDataIntoIndustryTable("AUTOMOBILE",databaseName,autombileCom.split(",")[0], autombileCom.split(",")[1]);
     }
     
     /*
-     * Create Industry Related Tables - Insurance, Automobile, Healthcare, Finance.
+     * Intent : Create Industry Related Tables - Insurance, Automobile, Healthcare, Finance.
+     */
+    /*
+     * PRE_CONDITION: Database must exist
      */
     public static void createTechnologyRelatedTables(String databaseNameLocation,String companyTableName) {
         // SQLite connection string
@@ -193,6 +196,10 @@ public class LoadData {
      * 	1. Database must exists
      *  2. COMPANY_OVERVIEW table must exist 
      */
+    /*
+     * Intent: This below method reads the overview table and gets the top most record tht has the lowest PERatio.
+     * This is done using LIMIT and ORDER BY clause using sql
+     */
     public String readOverviewTable(String databaseLocation, String firsttickerName, String secondTickerName) {
     	String sql = "SELECT ticker from COMPANY_OVERVIEW where ticker IN (\"" + firsttickerName + "\",\"" + secondTickerName + "\") order by peRatio LIMIT 1";
     	
@@ -247,6 +254,38 @@ public class LoadData {
      }
 	return false;
     }
-        
+  
+    /*
+     * Intent - Joins COMPANY_OVERVIEW and a Industry Table ( could be a technology, healthcare, Automobile, 
+     * Insurance ) to give a consolidated view of the Company data 
+     */
+    /*
+     * PRE_CONDITION -
+     * 	1. Database must exists
+     *  2. Healthcare, Technology, Automobile, Insurance table must exist 
+     */
+    public void showCompanyEntireDatawithOverview(String databaseLocation,String tickerName, String table)
+    {
+    	String sql = "SELECT COMPANY_OVERVIEW.ticker, COMPANY_OVERVIEW.peRatio, " + table + ".companyName FROM " + table + 
+    			" INNER JOIN COMPANY_OVERVIEW WHERE " + table + ".ticker = COMPANY_OVERVIEW.ticker";
+    	
+        try (Connection conn = this.ConnectToTheSQLDB(databaseLocation);
+                PreparedStatement preparedStatement  = conn.prepareStatement(sql)){
+
+               ResultSet rs  = preparedStatement.executeQuery();
+
+               
+               // loop through the result set
+               while (rs.next()) {
+                   System.out.println(rs.getString("ticker"));
+                   System.out.println(rs.getString("companyName"));
+                   System.out.println(rs.getString("peRatio"));
+            
+
+               }
+           } catch (SQLException e) {
+               System.out.println(e.getMessage());
+           }
+    }
 
 }
