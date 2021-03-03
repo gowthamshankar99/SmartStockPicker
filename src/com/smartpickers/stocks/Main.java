@@ -25,6 +25,7 @@ import com.smartpickers.companies.InsuranceCompany;
 import com.smartpickers.companies.StockDetailExtractor;
 import com.smartpickers.companies.TechnologyCompany;
 import com.smartpickers.stockdata.GetAPI;
+import com.smartpickers.stockdata.LoadData;
 import com.smartpickers.userdefinedexception.InvalidTickerException;
 
 import javafx.application.Application;
@@ -33,11 +34,17 @@ import javafx.stage.Stage;
 
 public class Main extends Thread {
 	
+	
+	private static boolean tableCreate = true;
+	
 	private String tickerName;
 	private static String result;
 	private static String logFileString = "DailyTickerLog.txt";
 	private String logFile; 
+	public static String tableName; 
 	private static AbstractCompany companyStock;
+	
+	public static final String dbName = "stocks.db";
 
 	
 	public Main(String tickerName) {
@@ -49,7 +56,21 @@ public class Main extends Thread {
 	 * The application intends to ask a series of Questions to the User related to investment 
 	 * to help the User make better investment decisions
 	 */
-	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException, InterruptedException {		
+	public static void main(String[] args) throws IOException, ParseException, InvalidTickerException, InterruptedException {
+		LoadData ld = new LoadData();
+		if(tableCreate)
+		{
+			// create the technologyTables
+			LoadData.createTechnologyRelatedTables(dbName, "TECHNOLOGY");
+			LoadData.createTechnologyRelatedTables(dbName, "FINANCE");
+			LoadData.createTechnologyRelatedTables(dbName, "AUTOMOBILE");
+			LoadData.createTechnologyRelatedTables(dbName, "INSURANCE");
+			LoadData.createTechnologyRelatedTables(dbName, "HEALTHCARE");
+			ld.createStockOverviewTable(dbName, "COMPANY_OVERVIEW");
+			ld.intialDataLoad(dbName);
+			
+			ld.checkForTickerAvailability("AAPL", "TECHNOLOGY" ,"test.db");
+		}
 		
 		// what is today's date 
 		
@@ -78,10 +99,12 @@ public class Main extends Thread {
 		System.err.println("\nWelcome to Smart Stock Picker");
 		System.out.println("Pick the Offerring from the options below!(Type 1, 2 or 3)");
 		System.out.println("1. Get Stock Quote");
+		
 		System.out.println("2. Get the list of all Major Tech Industry Stocks");
 		System.out.println("3. Compare two stocks and find a better Buy ?");
 		System.out.println("4. Get Stock Quote for Multiple Tickers");
-		System.out.println("5. Exit the Application");
+		System.out.println("5. Add ticker to the watchlist");
+		System.out.println("6. Exit the Application");
 		
 		int getOption = scanner.nextInt();		
 		
@@ -120,6 +143,30 @@ public class Main extends Thread {
 				
 				break;
 			case 5:
+				System.out.println("Select the Industry in which the Company is part of! \n1. Technology\n2. Finance\n3. Insurance\n4. Automobile\n");
+				int getStockOption5 = scanner.nextInt();
+				System.out.println("Enter the ticker Name and Company Name in comma separated list! For Example - AAPL\n");
+				String tickerName5 = scanner.next();
+				
+				if(getStockOption5 == 1)
+				{
+					ld.insertDataIntoIndustryTable("TECHNOLOGY", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+				}
+				else if(getStockOption5 == 2)
+				{
+					ld.insertDataIntoIndustryTable("FINANCE", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+				}
+				else if(getStockOption5 == 3)
+				{
+					ld.insertDataIntoIndustryTable("INSURANCE", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+				}
+				else if(getStockOption5 == 4)
+				{
+					ld.insertDataIntoIndustryTable("AUTOMOBILE", "test.db", tickerName5.split(",")[0], tickerName5.split(",")[1]);
+				}
+
+				break;
+			case 6:
 				System.exit(0);
 				break;
 			case 4:
@@ -221,16 +268,20 @@ public class Main extends Thread {
 						// IStockExtractor 
 						companyStock = new TechnologyCompany(api);
 						listerFile = new File("Technology.txt");
+						tableName = "TECHNOLOGY";
+						
 					}
 					else if(getStockLister == 2) {
 						// create the Finance Object
 						companyStock = new FinanceCompany(api);
-						listerFile = new File("Finance.txt");				
+						listerFile = new File("Finance.txt");		
+						tableName = "FINANCE";
 					}
 					else if(getStockLister == 3) {
 						// create the Insurance Object
 						companyStock = new InsuranceCompany(api);
-						listerFile = new File("Finance.txt");
+						listerFile = new File("Insurance.txt");
+						tableName = "INSURANCE";
 						
 					}
 					else if(getStockLister == 4) {
@@ -238,12 +289,22 @@ public class Main extends Thread {
 						companyStock = new AutomobileIndustryCompany(api);
 						
 						listerFile = new File("Automobile.txt");
+						tableName = "AUTOMOBILE";
 					}
 					
 					stockDetailExtractor = new StockDetailExtractor(companyStock, api);
 					// check if the tickers are available
-					boolean firstTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[0]);
-					boolean secondTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[1]);
+					
+					/*
+					 * This statement queries the data from the database 
+					 * and returns the count of rows which has the ticker. 
+					 * if the count is < 1 -> then checkForTickerAvailablity returns false  - this means ticker is not part of the respective industry table
+					 * if the count is > 1 -> then checkForTickerAvailablity returns true  - this means ticker is present in the respective industry table.
+					 */
+					boolean firstTicker = ld.checkForTickerAvailability(twoTickers.split(",")[0], tableName, dbName);
+					boolean secondTicker = ld.checkForTickerAvailability(twoTickers.split(",")[1], tableName, dbName);
+					//boolean firstTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[0]);
+					//boolean secondTicker = companyStock.readFile(companyStock, listerFile, twoTickers.split(",")[1]);
 					
 					if(!(firstTicker && secondTicker))
 					{
@@ -253,7 +314,18 @@ public class Main extends Thread {
 					else
 					{
 						
-						String betterStock =  Double.parseDouble(stockDetailExtractor.getPERatio(twoTickers.split(",")[0])) < Double.parseDouble(stockDetailExtractor.getPERatio(twoTickers.split(",")[1])) ? twoTickers.split(",")[0] : twoTickers.split(",")[1];
+						// Insert data into the DB with the PERatio into the COMPANY_OVERVIEW table
+						
+						ld.insertDataIntoOverviewTable(dbName, twoTickers.split(",")[0], stockDetailExtractor.getPERatio(twoTickers.split(",")[0]));
+						ld.insertDataIntoOverviewTable(dbName, twoTickers.split(",")[1], stockDetailExtractor.getPERatio(twoTickers.split(",")[1]));
+						
+						/*
+						 *  using selection order by statement - Query against the COMPANY_OVERVIEW table 
+						 *  and find the top 1st row to get the better buy of the two companies
+						 */
+						
+						String betterStock = ld.readOverviewTable("test.db", twoTickers.split(",")[0], twoTickers.split(",")[1]);
+						 
 						
 						System.err.println("Comparing the PERatio between the two stocks " + twoTickers.split(",")[0] + " and " +twoTickers.split(",")[1] + ", " + betterStock + " is the Better Buy!");
 	                    System.out.println();				
